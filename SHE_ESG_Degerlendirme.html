@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHE — ESG Olgunluk Değerlendirmesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-dark: #0A4A35;
+  --green-mid: #1D7A56;
+  --green-light: #E8F5EF;
+  --green-accent: #2DC87A;
+  --amber: #E8A020;
+  --red: #D94040;
+  --blue: #2060C8;
+  --gray-50: #F8F7F4;
+  --gray-100: #EEECE8;
+  --gray-300: #C8C5BC;
+  --gray-500: #8A8880;
+  --gray-700: #4A4845;
+  --gray-900: #1A1916;
+  --white: #FFFFFF;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.13);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--green-dark);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  color: var(--white);
+  letter-spacing: -.01em;
+}
+.logo span { color: var(--green-accent); }
+.header-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,.55);
+  font-weight: 300;
+}
+
+/* ── HERO (intake only) ── */
+.hero {
+  background: var(--green-dark);
+  padding: 3rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 48px;
+  background: var(--gray-50);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: .75rem;
+}
+.hero p {
+  font-size: 1rem;
+  color: rgba(255,255,255,.65);
+  max-width: 520px;
+  margin: 0 auto 2rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+.level-cards {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.level-card {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: var(--radius-md);
+  padding: .75rem 1.25rem;
+  text-align: left;
+  min-width: 160px;
+}
+.level-card .lc-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--green-accent);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.level-card .lc-name { font-size: 13px; color: var(--white); font-weight: 500; }
+.level-card .lc-desc { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
+
+/* ── MAIN LAYOUT ── */
+.main { flex: 1; }
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.card-body { padding: 1.5rem; }
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title svg { flex-shrink: 0; }
+
+/* ── FORM ── */
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.field-grid.full { grid-template-columns: 1fr; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 12px; font-weight: 500; color: var(--gray-500); }
+.field input, .field select {
+  height: 40px;
+  border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--gray-900);
+  background: var(--gray-50);
+  outline: none;
+  transition: border-color .15s, background .15s;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--green-mid);
+  background: var(--white);
+}
+.field input.invalid { border-color: var(--red); }
+.field .err { font-size: 11px; color: var(--red); display: none; }
+.field .err.show { display: block; }
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  background: var(--green-dark);
+  padding: 1rem 1.5rem .75rem;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.progress-level {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green-accent);
+  letter-spacing: .05em;
+}
+.progress-counter { font-size: 12px; color: rgba(255,255,255,.5); }
+.progress-bar-bg {
+  height: 3px;
+  background: rgba(255,255,255,.15);
+  border-radius: 2px;
+}
+.progress-bar-fill {
+  height: 3px;
+  background: var(--green-accent);
+  border-radius: 2px;
+  transition: width .4s ease;
+}
+.level-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 0 1.5rem .75rem;
+  background: var(--green-dark);
+}
+.ltab {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  color: rgba(255,255,255,.4);
+  border: 1px solid rgba(255,255,255,.12);
+  transition: all .2s;
+}
+.ltab.active { background: var(--green-accent); color: var(--green-dark); border-color: var(--green-accent); font-weight: 600; }
+.ltab.done { color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.3); }
+
+/* ── QUESTION ── */
+.q-section { font-size: 11px; font-weight: 600; color: var(--green-mid); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .5rem; }
+.q-text { font-size: 17px; color: var(--gray-900); line-height: 1.55; margin-bottom: 1.5rem; font-weight: 400; }
+.opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--gray-700);
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  text-align: left;
+  transition: all .15s;
+  line-height: 1.4;
+}
+.opt:hover { border-color: var(--green-mid); background: var(--green-light); }
+.opt.sel {
+  border-color: var(--green-mid);
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-weight: 500;
+}
+.opt-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-300);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.opt.sel .opt-dot { background: var(--green-mid); border-color: var(--green-mid); }
+.opt.sel .opt-dot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: white; }
+
+/* ── NAV BUTTONS ── */
+.nav-row { display: flex; gap: 8px; justify-content: flex-end; }
+.btn {
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+  border: none;
+}
+.btn-primary {
+  background: var(--green-mid);
+  color: white;
+}
+.btn-primary:hover { background: var(--green-dark); }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+.btn-secondary {
+  background: var(--white);
+  color: var(--gray-500);
+  border: 1.5px solid var(--gray-100);
+}
+.btn-secondary:hover { background: var(--gray-50); }
+
+/* ── UNLOCK BANNER ── */
+.unlock-banner {
+  background: linear-gradient(135deg, #0A4A35 0%, #1D7A56 100%);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.unlock-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(45,200,122,.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.unlock-icon svg { color: var(--green-accent); }
+.unlock-text { font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.5; }
+.unlock-text strong { color: white; }
+
+/* ── RESULT ── */
+.result-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.score-row { display: flex; align-items: center; gap: 1.25rem; }
+.score-ring {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border: 3px solid currentColor;
+}
+.score-num { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1; }
+.score-lbl { font-size: 10px; font-weight: 600; letter-spacing: .08em; opacity: .7; }
+.result-status { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 4px; }
+.result-desc { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+.result-module { margin-top: 8px; font-size: 12px; color: var(--gray-500); }
+.result-module strong { color: var(--gray-700); }
+
+.dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dim-item {
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+.dim-name { font-size: 12px; color: var(--gray-500); margin-bottom: 8px; line-height: 1.3; }
+.dim-bar-bg { height: 4px; background: var(--gray-100); border-radius: 2px; }
+.dim-bar-fill { height: 4px; border-radius: 2px; transition: width 1s ease; }
+.dim-pct { font-size: 13px; font-weight: 600; margin-top: 5px; }
+
+.reco-list { display: flex; flex-direction: column; gap: 8px; }
+.reco-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+.reco-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-accent); margin-top: 5px; flex-shrink: 0; }
+
+/* ── SEND SECTION ── */
+.send-section {
+  border-top: 1px solid var(--gray-100);
+  padding: 1.25rem 1.5rem;
+}
+.send-title { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 4px; }
+.send-subtitle { font-size: 13px; color: var(--gray-500); margin-bottom: 12px; }
+.send-row { display: flex; gap: 8px; }
+.send-row input {
+  flex: 1;
+  height: 40px;
+  border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--gray-900);
+  background: var(--gray-50);
+  outline: none;
+  transition: border-color .15s;
+}
+.send-row input:focus { border-color: var(--green-mid); background: var(--white); }
+.status-msg {
+  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+  display: none;
+  line-height: 1.5;
+}
+.status-msg.ok { display: block; background: #E8F5EF; color: #0A4A35; }
+.status-msg.err { display: block; background: #FDF0F0; color: #B03030; }
+.status-msg.loading { display: block; background: var(--gray-50); color: var(--gray-500); }
+
+/* ── CTA GRID ── */
+.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 1.25rem 1.5rem; border-top: 1px solid var(--gray-100); }
+.btn-cta {
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--gray-100);
+  background: var(--gray-50);
+  color: var(--gray-700);
+  transition: all .15s;
+  text-align: center;
+  line-height: 1.4;
+}
+.btn-cta:hover { background: var(--white); border-color: var(--gray-300); }
+.btn-cta.primary { background: var(--green-mid); color: white; border-color: var(--green-mid); }
+.btn-cta.primary:hover { background: var(--green-dark); }
+
+/* ── FIRMA INFO CHIP ── */
+.firm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(45,200,122,.12);
+  border: 1px solid rgba(45,200,122,.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--green-dark);
+  margin-bottom: 1.25rem;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--green-dark);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,.35);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 520px) {
+  .field-grid { grid-template-columns: 1fr; }
+  .dim-grid { grid-template-columns: 1fr; }
+  .cta-grid { grid-template-columns: 1fr; }
+  .level-cards { flex-direction: column; align-items: center; }
+  .hero { padding: 2rem 1.25rem 3.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">SHE<span>.</span></div>
+  <div class="header-sub">Sürdürülebilirlik Değerlendirme Sistemi</div>
+</header>
+
+<main class="main" id="main-content"></main>
+
+<footer class="site-footer">
+  © 2025 SHE Sürdürülebilirlik · Tüm haklar saklıdır
+</footer>
+
+<script>
+const QS=[
+{id:'s1',sec:'Regülasyon Farkındalığı',lv:25,txt:'TSRS (Türkiye Sürdürülebilirlik Raporlama Standartları) kavramını biliyor musunuz?',opts:['Evet, detaylı bilgim var','Kısmen duydum','Hayır, bilmiyorum'],sc:[4,2,0]},
+{id:'s2',sec:'Regülasyon Farkındalığı',lv:25,txt:'ESRS (Avrupa Sürdürülebilirlik Raporlama Standartları) kavramını biliyor musunuz?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s3',sec:'Regülasyon Farkındalığı',lv:25,txt:'CBAM (Karbon Sınır Düzenleme Mekanizması) şirketinizi etkileyebilir mi?',opts:['Evet, etkisi var','Emin değilim','Hayır'],sc:[4,2,0]},
+{id:'s4',sec:'Regülasyon Farkındalığı',lv:25,txt:'Sürdürülebilirlik raporlaması kapsamında olup olmadığınızı biliyor musunuz?',opts:['Evet','Emin değilim','Hayır'],sc:[4,2,0]},
+{id:'s5',sec:'Yönetim',lv:25,txt:'Yönetim kurulu sürdürülebilirliği gündemine alıyor mu?',opts:['Düzenli','Ara sıra','Hiç'],sc:[4,2,0]},
+{id:'s6',sec:'Yönetim',lv:25,txt:'Sürdürülebilirlikten sorumlu atanmış kişi var mı?',opts:['Evet, tam zamanlı','Kısmen sorumlu','Hayır'],sc:[4,2,0]},
+{id:'s7',sec:'Yönetim',lv:25,txt:'Sürdürülebilirlik komitesi var mı?',opts:['Var ve aktif','Kuruluyor','Yok'],sc:[4,2,0]},
+{id:'s8',sec:'DMA ve IRO',lv:25,txt:'Çifte Önemlilik Analizi (DMA) kavramını biliyor musunuz?',opts:['Evet, uyguluyoruz','Biliyorum, uygulamadık','Hayır'],sc:[4,2,0]},
+{id:'s9',sec:'DMA ve IRO',lv:25,txt:'IRO (Impact, Risk, Opportunity) kavramını biliyor musunuz?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s10',sec:'DMA ve IRO',lv:25,txt:'Paydaş analizi yaptınız mı?',opts:['Evet, dokümanlandı','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s11',sec:'DMA ve IRO',lv:25,txt:'DMA çalışması tamamlandı mı?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
+{id:'s12',sec:'DMA ve IRO',lv:25,txt:'IRO çalışması tamamlandı mı?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
+{id:'s13',sec:'ESG Verisi',lv:25,txt:'Enerji tüketimleri düzenli takip ediliyor mu?',opts:['Evet, sistematik','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s14',sec:'ESG Verisi',lv:25,txt:'Su tüketimleri düzenli takip ediliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s15',sec:'ESG Verisi',lv:25,txt:'Atık verileri düzenli takip ediliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s16',sec:'ESG Verisi',lv:25,txt:'İnsan kaynakları verileri düzenli takip ediliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s17',sec:'Karbon',lv:25,txt:'Scope 1 (doğrudan emisyonlar) hesaplanıyor mu?',opts:['Evet, doğrulanmış','Devam ediyor','Hayır'],sc:[4,2,0]},
+{id:'s18',sec:'Karbon',lv:25,txt:'Scope 2 (satın alınan enerji emisyonları) hesaplanıyor mu?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
+{id:'s19',sec:'Karbon',lv:25,txt:'Scope 3 (değer zinciri emisyonları) hesaplanıyor mu?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
+{id:'s20',sec:'Karbon',lv:25,txt:'Karbon ayak izi raporu hazırlandı mı?',opts:['Evet, yayınlandı','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s21',sec:'Raporlama',lv:25,txt:'Sürdürülebilirlik raporu yayınlandı mı?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s22',sec:'Raporlama',lv:25,txt:'Hangi standartta raporlama yapılıyor?',opts:['GRI / TSRS / ESRS','Karma yaklaşım','Henüz yok'],sc:[4,2,0]},
+{id:'s23',sec:'Raporlama',lv:25,txt:'Bağımsız doğrulama (güvence) yaptırıldı mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s24',sec:'Talep',lv:25,txt:'Müşteriler ESG verisi talep ediyor mu?',opts:['Evet, aktif','Ara sıra','Hayır'],sc:[4,2,0]},
+{id:'s25',sec:'Talep',lv:25,txt:'Bankalar / finansörler ESG verisi talep ediyor mu?',opts:['Evet','Ara sıra','Hayır'],sc:[4,2,0]},
+{id:'s26',sec:'ESRS 1',lv:50,txt:'Raporlama kapsamına alınan tesisler tanımlı mı?',opts:['Evet, dokümanlandı','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s27',sec:'ESRS 1',lv:50,txt:'Hariç bırakılan tesisler gerekçelendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s28',sec:'ESRS 1',lv:50,txt:'Operasyonel kontrol yaklaşımı belirlenmiş mi?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+{id:'s29',sec:'ESRS 1',lv:50,txt:'Finansal kontrol yaklaşımı belirlenmiş mi?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+{id:'s30',sec:'ESRS 1',lv:50,txt:'Raporlama sınırları dokümante edilmiş mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s31',sec:'Değer Zinciri',lv:50,txt:'Tedarikçiler ESG açısından sınıflandırıldı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s32',sec:'Değer Zinciri',lv:50,txt:'Kritik tedarikçiler tanımlandı mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+{id:'s33',sec:'Değer Zinciri',lv:50,txt:'AB müşterilerinden ESG talebi geliyor mu?',opts:['Aktif talep var','Ara sıra','Hayır'],sc:[4,2,0]},
+{id:'s34',sec:'Değer Zinciri',lv:50,txt:'Değer zinciri riskleri değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s35',sec:'Değer Zinciri',lv:50,txt:'Scope 3 stratejisi mevcut mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s36',sec:'ESRS 2 Yönetişim',lv:50,txt:'Yönetim kurulunda ESG sorumluluğu resmi olarak tanımlı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s37',sec:'ESRS 2 Yönetişim',lv:50,txt:'ESG performansı üst yönetime raporlanıyor mu?',opts:['Düzenli','Ara sıra','Hayır'],sc:[4,2,0]},
+{id:'s38',sec:'ESRS 2 Yönetişim',lv:50,txt:'Yönetim ESG hedeflerini izliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s39',sec:'ESRS 2 Yönetişim',lv:50,txt:'ESG KPI seti oluşturuldu mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s40',sec:'ESRS 2 Yönetişim',lv:50,txt:'ESG performans raporu hazırlanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s41',sec:'Veri Güvenilirliği',lv:50,txt:'Veri sahipleri tanımlı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s42',sec:'Veri Güvenilirliği',lv:50,txt:'Kanıt dokümanları düzenli tutuluyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s43',sec:'Veri Güvenilirliği',lv:50,txt:'Veri doğrulama süreci mevcut mu?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s44',sec:'Veri Güvenilirliği',lv:50,txt:'Veri eksiklikleri kayıt altına alınıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s45',sec:'Veri Güvenilirliği',lv:50,txt:'Denetim izi oluşturulabiliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s46',sec:'Hedefler',lv:50,txt:'Karbon azaltım hedefi belirlenmiş mi?',opts:['Evet, bilimsel temelli','Genel hedef var','Hayır'],sc:[4,2,0]},
+{id:'s47',sec:'Hedefler',lv:50,txt:'Enerji verimliliği hedefi var mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s48',sec:'Hedefler',lv:50,txt:'İSG hedefleri var mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s49',sec:'Hedefler',lv:50,txt:'Sosyal hedefler var mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s50',sec:'Hedefler',lv:50,txt:'Bu hedefler ölçülüyor ve izleniyor mu?',opts:['Evet, sistematik','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s51',sec:'DMA Derinlik',lv:100,txt:'E1 İklim Değişikliği DMA kapsamında değerlendirildi mi?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
+{id:'s52',sec:'DMA Derinlik',lv:100,txt:'E2 Kirlilik değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s53',sec:'DMA Derinlik',lv:100,txt:'E3 Su ve Deniz Kaynakları değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s54',sec:'DMA Derinlik',lv:100,txt:'E4 Biyoçeşitlilik değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s55',sec:'DMA Derinlik',lv:100,txt:'E5 Döngüsel Ekonomi değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s56',sec:'DMA Derinlik',lv:100,txt:'S1 Kendi Çalışanlar değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s57',sec:'DMA Derinlik',lv:100,txt:'S2 Değer Zinciri Çalışanları değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s58',sec:'DMA Derinlik',lv:100,txt:'S3 Etkilenen Topluluklar değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s59',sec:'DMA Derinlik',lv:100,txt:'S4 Tüketiciler değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s60',sec:'DMA Derinlik',lv:100,txt:'G1-G2 Yönetişim konuları değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s61',sec:'IRO Derinliği',lv:100,txt:'Önemli konular için etki (Impact) tanımlandı mı?',opts:['Evet, hepsi','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s62',sec:'IRO Derinliği',lv:100,txt:'Risk tanımlandı mı?',opts:['Evet, hepsi','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s63',sec:'IRO Derinliği',lv:100,txt:'Fırsat tanımlandı mı?',opts:['Evet, hepsi','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s64',sec:'IRO Derinliği',lv:100,txt:'Finansal etki değerlendirmesi yapıldı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s65',sec:'IRO Derinliği',lv:100,txt:'Her IRO için sorumlu atandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s66',sec:'IRO Derinliği',lv:100,txt:'Aksiyonlar tanımlandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s67',sec:'IRO Derinliği',lv:100,txt:"KPI'lar belirlendi mi?",opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s68',sec:'IRO Derinliği',lv:100,txt:'Hedefler belirlendi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s69',sec:'IRO Derinliği',lv:100,txt:'IRO aksiyonları için bütçe ayrıldı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s70',sec:'IRO Derinliği',lv:100,txt:'İzleme mekanizması kuruldu mu?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s71',sec:'Hazırlık Temeli',lv:100,txt:'Veri sınırlılıkları dokümante edildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s72',sec:'Hazırlık Temeli',lv:100,txt:'Ölçüm varsayımları tanımlandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s73',sec:'Hazırlık Temeli',lv:100,txt:'Ölçüm belirsizlikleri raporlandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s74',sec:'Hazırlık Temeli',lv:100,txt:'Karşılaştırmalı dönem verisi hazır mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s75',sec:'Hazırlık Temeli',lv:100,txt:'Önceki dönem düzeltmeleri yönetilebiliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s76',sec:'Scope Olgunluğu',lv:100,txt:'Tüm tesislerde Scope 1 hesaplanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s77',sec:'Scope Olgunluğu',lv:100,txt:'Tüm tesislerde Scope 2 hesaplanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s78',sec:'Scope Olgunluğu',lv:100,txt:'Scope 3 kategori bazında hesaplanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s79',sec:'Scope Olgunluğu',lv:100,txt:'Emisyon faktörleri dokümante edilmiş mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s80',sec:'Scope Olgunluğu',lv:100,txt:'Veri kaynakları sınıflandırılmış mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s81',sec:'Raporlama ve Güvence',lv:100,txt:'ESRS uyum matrisi oluşturuldu mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s82',sec:'Raporlama ve Güvence',lv:100,txt:'TSRS uyum matrisi oluşturuldu mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s83',sec:'Raporlama ve Güvence',lv:100,txt:'Denetim dosyası hazır mı?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s84',sec:'Raporlama ve Güvence',lv:100,txt:'Kanıt klasörleri hazır mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s85',sec:'Raporlama ve Güvence',lv:100,txt:'İç doğrulama yapıldı mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s86',sec:'Yeşil Finansman',lv:100,txt:'Yeşil kredi / sürdürülebilir finansman kullanıldı mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+{id:'s87',sec:'Yeşil Finansman',lv:100,txt:'Sürdürülebilir finansman stratejisi mevcut mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s88',sec:'Yeşil Finansman',lv:100,txt:'ESG performansı finansal risk analizine dahil mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s89',sec:'Yeşil Finansman',lv:100,txt:'İklim riskleri finansal planlamaya dahil mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s90',sec:'Yeşil Finansman',lv:100,txt:'AB Taksonomisi uyumu değerlendirildi mi?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+{id:'s91',sec:'Dijital Olgunluk',lv:100,txt:'ESG yazılımı / platformu kullanılıyor mu?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+{id:'s92',sec:'Dijital Olgunluk',lv:100,txt:'Veriler merkezi bir sistemde mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s93',sec:'Dijital Olgunluk',lv:100,txt:'Otomatik veri toplama var mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s94',sec:'Dijital Olgunluk',lv:100,txt:'ESG dashboard kullanılıyor mu?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s95',sec:'Dijital Olgunluk',lv:100,txt:"KPI'lar gerçek zamanlı izleniyor mu?",opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s96',sec:'Kurumsal Olgunluk',lv:100,txt:'Yazılı ESG stratejisi mevcut mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s97',sec:'Kurumsal Olgunluk',lv:100,txt:'2030 hedefleri belirlenmiş mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
+{id:'s98',sec:'Kurumsal Olgunluk',lv:100,txt:'2050 uzun vadeli hedefler var mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+{id:'s99',sec:'Kurumsal Olgunluk',lv:100,txt:'Sürdürülebilirlik bütçesi ayrıldı mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
+{id:'s100',sec:'Kurumsal Olgunluk',lv:100,txt:'Sürdürülebilirlik performansı yönetim prim sistemine bağlı mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
+];
+
+const SECTORS=['İmalat / Üretim','Tekstil / Hazır Giyim','Gıda ve İçecek','İnşaat / GYO','Enerji / Utilities','Lojistik / Taşımacılık','Finans / Sigortacılık','Perakende / Ticaret','Turizm / Otelcilik','Tarım / Ormancılık','Sağlık','Teknoloji / Yazılım','Diğer'];
+const SIZES=['1–9 (Mikro)','10–49 (Küçük)','50–249 (Orta)','250+ (Büyük)'];
+
+const STATUS_MAP=[
+  {mn:0,mx:20,lbl:'Habersiz',col:'#D94040',mod:'Modül 1',desc:'Sürdürülebilirlik farkındalığı henüz oluşmamış. Temel kavramlardan başlayan eğitim paketi önerilir.'},
+  {mn:21,mx:40,lbl:'Başlangıç',col:'#C07818',mod:'Modül 1–2',desc:'Farkındalık var ancak sistemli yaklaşım geliştirilmeli. Yönetim taahhüdü kritik öncelik.'},
+  {mn:41,mx:60,lbl:'Hazırlık',col:'#2060C8',mod:'Modül 2–3–4',desc:'Temel altyapı kuruluyor. DMA, veri yönetimi ve hedef belirleme süreçlerine odaklanılmalı.'},
+  {mn:61,mx:80,lbl:'İlk Raporlama',col:'#2A6010',mod:'Modül 4–5',desc:'Raporlama olgunluğuna yaklaşılıyor. ESRS uyum matrisi ve denetim dosyası hazırlığı öncelikli.'},
+  {mn:81,mx:90,lbl:'Uyumlu',col:'#0A6040',mod:'Modül 5–6',desc:'Uyum düzeyi yüksek. Güvence hazırlığı ve dijital entegrasyon sonraki adım.'},
+  {mn:91,mx:100,lbl:'Lider',col:'#4030A0',mod:'İleri Uzmanlık',desc:'Sektörde lider konumunda. Bilimsel hedefler ve güvence seviyesi artırımı gündemde olmalı.'},
+];
+
+let ST={phase:'intake',lv:25,qi:0,ans:{},firm:{},unlocked:[25]};
+
+function qsFor(lv){return QS.filter(q=>q.lv===lv);}
+function calcScore(maxLv){
+  let t=0,m=0;
+  QS.filter(q=>q.lv<=maxLv).forEach(q=>{if(ST.ans[q.id]!==undefined)t+=q.sc[ST.ans[q.id]];m+=4;});
+  return m?Math.round((t/m)*100):0;
+}
+function secScores(maxLv){
+  const s={};
+  QS.filter(q=>q.lv<=maxLv).forEach(q=>{
+    if(!s[q.sec])s[q.sec]={t:0,m:0};
+    if(ST.ans[q.id]!==undefined)s[q.sec].t+=q.sc[ST.ans[q.id]];
+    s[q.sec].m+=4;
+  });
+  return s;
+}
+function getStatus(sc){return STATUS_MAP.find(s=>sc>=s.mn&&sc<=s.mx)||STATUS_MAP[0];}
+function recos(sc){
+  if(sc<=20)return['Yönetim taahhüdü ve ESG farkındalığı oluşturulmalı','TSRS ve ESRS temel kavramları öğrenilmeli','ESG veri takibi için ilk adımlar atılmalı'];
+  if(sc<=40)return['Sürdürülebilirlik sorumlusu atanmalı','Temel ESG verileri takibe alınmalı','Paydaş analizi yapılmalı'];
+  if(sc<=60)return['DMA çalışması tamamlanmalı','Scope 1–2 karbon hesaplamaları yapılmalı','ESG KPI seti oluşturulmalı'];
+  if(sc<=80)return['ESRS uyum matrisi tamamlanmalı','Denetim dosyası ve kanıt klasörleri hazırlanmalı','Bağımsız güvence süreci planlanmalı'];
+  if(sc<=90)return['Scope 3 kapsamı genişletilmeli','Dijital ESG platformuna geçilmeli','AB Taksonomisi uyumu değerlendirilmeli'];
+  return['Bilimsel temelli hedefler (SBTi) doğrulanmalı','Güvence seviyesi artırılmalı','Sektör liderliği konumu raporlanmalı'];
+}
+
+function buildPayload(){
+  const tlv=parseInt(ST.firm.targetLv||25);
+  const sc=calcScore(tlv);
+  const st=getStatus(sc);
+  const secs=secScores(tlv);
+  return{
+    timestamp:new Date().toISOString(),
+    firma_adi:ST.firm.name||'',
+    sektor:ST.firm.sector||'',
+    calisan_sayisi:ST.firm.size||'',
+    sehir:ST.firm.city||'',
+    ilgili_kisi:ST.firm.contact||'',
+    email:ST.firm.email||'',
+    degerlendirme_seviyesi:'SHE-'+tlv,
+    toplam_puan:sc,
+    olgunluk_durumu:st.lbl,
+    onerilen_modul:st.mod,
+    bolum_puanlari:Object.entries(secs).map(([k,v])=>({bolum:k,puan:Math.round((v.t/v.m)*100)})),
+    aksiyon_onerileri:recos(sc)
+  };
+}
+
+function render(){
+  const mc=document.getElementById('main-content');
+  if(ST.phase==='intake')mc.innerHTML=renderIntake();
+  else if(ST.phase==='quiz')mc.innerHTML=renderQuiz();
+  else mc.innerHTML=renderResult();
+  attach();
+}
+
+function renderIntake(){
+  return `
+  <div class="hero">
+    <h1>ESG Olgunluk<br>Değerlendirmesi</h1>
+    <p>Firmanızın sürdürülebilirlik hazırlık düzeyini ölçün. Puan, öneri ve danışmanlık yol haritanız 10 dakikada hazır.</p>
+    <div class="level-cards">
+      <div class="level-card"><div class="lc-tag">SHE-25</div><div class="lc-name">ESG Check-Up</div><div class="lc-desc">25 soru · ~10 dk</div></div>
+      <div class="level-card"><div class="lc-tag">SHE-50</div><div class="lc-name">Readiness Assessment</div><div class="lc-desc">50 soru · ~20 dk</div></div>
+      <div class="level-card"><div class="lc-tag">SHE-100</div><div class="lc-name">ESRS Readiness Audit</div><div class="lc-desc">100 soru · ~40 dk</div></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
+          Firma bilgileri
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Firma adı *</label>
+            <input type="text" id="f-name" placeholder="ABC Sanayi A.Ş." value="${ST.firm.name||''}">
+            <span class="err" id="e-name">Bu alan zorunludur.</span>
+          </div>
+          <div class="field">
+            <label>Sektör *</label>
+            <select id="f-sector">
+              <option value="">Seçiniz...</option>
+              ${SECTORS.map(s=>`<option value="${s}" ${ST.firm.sector===s?'selected':''}>${s}</option>`).join('')}
+            </select>
+            <span class="err" id="e-sector">Lütfen sektör seçiniz.</span>
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Çalışan sayısı</label>
+            <select id="f-size">
+              <option value="">Seçiniz...</option>
+              ${SIZES.map(s=>`<option value="${s}" ${ST.firm.size===s?'selected':''}>${s}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label>İl</label>
+            <input type="text" id="f-city" placeholder="İstanbul" value="${ST.firm.city||''}">
+          </div>
+        </div>
+        <div class="field-grid full">
+          <div class="field">
+            <label>İletişim kişisi</label>
+            <input type="text" id="f-contact" placeholder="Ad Soyad / Unvan" value="${ST.firm.contact||''}">
+          </div>
+        </div>
+        <div class="field-grid full">
+          <div class="field">
+            <label>E-posta adresi *</label>
+            <input type="email" id="f-email" placeholder="info@firma.com" value="${ST.firm.email||''}">
+            <span class="err" id="e-email">Geçerli bir e-posta giriniz.</span>
+          </div>
+        </div>
+        <div class="field-grid full" style="margin-bottom:0">
+          <div class="field">
+            <label>Değerlendirme seviyesi</label>
+            <select id="f-level">
+              <option value="25" ${!ST.firm.targetLv||ST.firm.targetLv==25?'selected':''}>SHE-25 — ESG Check-Up (25 soru, ~10 dk)</option>
+              <option value="50" ${ST.firm.targetLv==50?'selected':''}>SHE-50 — Readiness Assessment (50 soru, ~20 dk)</option>
+              <option value="100" ${ST.firm.targetLv==100?'selected':''}>SHE-100 — ESRS Readiness Audit (100 soru, ~40 dk)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div style="padding:1rem 1.5rem 1.5rem;display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" id="btn-start" style="padding:12px 32px;font-size:15px">Değerlendirmeyi Başlat →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderQuiz(){
+  const tlv=parseInt(ST.firm.targetLv||25);
+  const qs=qsFor(ST.lv);
+  const q=qs[ST.qi];
+  const answeredTotal=QS.filter(x=>x.lv<=tlv&&ST.ans[x.id]!==undefined).length;
+  const totalQs=QS.filter(x=>x.lv<=tlv).length;
+  const progress=Math.round((answeredTotal/totalQs)*100);
+  const overallIdx=QS.indexOf(q)+1;
+  const lvls=[25,50,100].filter(l=>l<=tlv);
+  const lvlName={25:'SHE-25 · ESG Check-Up',50:'SHE-50 · Readiness Assessment',100:'SHE-100 · ESRS Readiness Audit'};
+  const tabs=lvls.map(l=>`<div class="ltab ${l===ST.lv?'active':l<ST.lv?'done':''}">${l===25?'SHE-25':l===50?'SHE-50':'SHE-100'}</div>`).join('');
+
+  let banner='';
+  if(ST.lv===50&&ST.qi===0)banner=`<div class="unlock-banner"><div class="unlock-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div><div class="unlock-text"><strong>SHE-50 açıldı!</strong> ESG Check-Up tamamlandı. Danışmanlık ön analizi başlıyor.</div></div>`;
+  if(ST.lv===100&&ST.qi===0)banner=`<div class="unlock-banner"><div class="unlock-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div><div class="unlock-text"><strong>SHE-100 açıldı!</strong> Readiness Assessment tamamlandı. ESRS Readiness Audit başlıyor.</div></div>`;
+
+  const isLastInLv=ST.qi===qs.length-1;
+  const isLastLv=ST.lv===tlv;
+  const nextLbl=isLastInLv&&isLastLv?'Sonuçları Gör ✓':isLastInLv?'Sonraki Bölüm →':'Sonraki';
+
+  return`
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span class="progress-level">${lvlName[ST.lv]}</span>
+      <span class="progress-counter">${overallIdx} / ${totalQs}</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${progress}%"></div></div>
+  </div>
+  <div class="level-tabs">${tabs}</div>
+  <div class="container" style="padding-top:1.5rem">
+    ${banner}
+    <div class="firm-chip">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      ${ST.firm.name||'Firma'} · ${ST.firm.sector||''}
+    </div>
+    <div class="q-section">${q.sec}</div>
+    <div class="q-text">${q.txt}</div>
+    <div class="opts">
+      ${q.opts.map((o,i)=>`<button class="opt${ST.ans[q.id]===i?' sel':''}" data-idx="${i}"><span class="opt-dot"></span>${o}</button>`).join('')}
+    </div>
+    <div class="nav-row">
+      ${ST.qi>0||ST.lv>25?`<button class="btn btn-secondary" id="btn-back">← Geri</button>`:''}
+      <button class="btn btn-primary" id="btn-next" ${ST.ans[q.id]===undefined?'disabled':''}>${nextLbl}</button>
+    </div>
+  </div>`;
+}
+
+function renderResult(){
+  const tlv=parseInt(ST.firm.targetLv||25);
+  const sc=calcScore(tlv);
+  const st=getStatus(sc);
+  const secs=secScores(tlv);
+  const secKeys=Object.keys(secs).slice(0,6);
+  const firm=ST.firm;
+  const rs=recos(sc);
+
+  return`
+  <div class="container">
+    <div class="firm-chip" style="margin-top:1rem">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      ${firm.name||'Firma'} · ${firm.sector||''} ${firm.size?'· '+firm.size:''}
+    </div>
+    <div class="card">
+      <div class="result-header">
+        <div class="score-row">
+          <div class="score-ring" style="color:${st.col}">
+            <span class="score-num" style="color:${st.col}">${sc}</span>
+            <span class="score-lbl" style="color:${st.col}">PUAN</span>
+          </div>
+          <div>
+            <div class="result-status" style="color:${st.col}">${st.lbl}</div>
+            <div class="result-desc">${st.desc}</div>
+            <div class="result-module">Önerilen eğitim: <strong>${st.mod}</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title" style="margin-bottom:.75rem">Bölüm skorları</div>
+        <div class="dim-grid">
+          ${secKeys.map(s=>{
+            const d=secs[s];const p=Math.round((d.t/d.m)*100);
+            const c=p>=70?'#1D7A56':p>=40?'#C07818':'#D94040';
+            return`<div class="dim-item"><div class="dim-name">${s}</div><div class="dim-bar-bg"><div class="dim-bar-fill" style="width:${p}%;background:${c}"></div></div><div class="dim-pct" style="color:${c}">${p}%</div></div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="send-section">
+        <div class="card-title" style="margin-bottom:.5rem">Öncelikli aksiyon alanları</div>
+        <div class="reco-list">
+          ${rs.map(r=>`<div class="reco-item"><div class="reco-dot"></div><span>${r}</span></div>`).join('')}
+        </div>
+      </div>
+
+      <div class="send-section">
+        <div class="send-title">Sonuçları e-posta ile gönder</div>
+        <div class="send-subtitle">Kişiselleştirilmiş rapor <strong>${firm.email||'kayıtlı adresinize'}</strong> gönderilecek.</div>
+        <div class="send-row">
+          <input type="email" id="send-email" placeholder="E-posta adresi" value="${firm.email||''}">
+          <button class="btn btn-primary" id="btn-send-email">Gönder</button>
+        </div>
+        <div class="status-msg" id="email-status"></div>
+      </div>
+
+      <div class="send-section">
+        <div class="send-title">Google Sheets'e kaydet (Make.com)</div>
+        <div class="send-subtitle">Webhook URL'nizi girin — veri Sheets'e otomatik aktarılır.</div>
+        <div class="send-row">
+          <input type="url" id="webhook-url" placeholder="https://hook.eu1.make.com/xxxx">
+          <button class="btn btn-primary" id="btn-send-sheets">Kaydet</button>
+        </div>
+        <div class="status-msg" id="sheets-status"></div>
+      </div>
+
+      <div class="cta-grid">
+        <button class="btn-cta" id="btn-new">Yeni değerlendirme</button>
+        <button class="btn-cta primary" id="btn-consult">Danışmanlık talebi oluştur</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function attach(){
+  const bs=document.getElementById('btn-start');
+  if(bs)bs.addEventListener('click',()=>{
+    const nm=document.getElementById('f-name').value.trim();
+    const sec=document.getElementById('f-sector').value;
+    const em=document.getElementById('f-email').value.trim();
+    let ok=true;
+    [['f-name','e-name',!nm],['f-sector','e-sector',!sec],['f-email','e-email',!em||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)]].forEach(([fid,eid,bad])=>{
+      const f=document.getElementById(fid),e=document.getElementById(eid);
+      if(bad){f&&f.classList.add('invalid');e&&e.classList.add('show');ok=false;}
+      else{f&&f.classList.remove('invalid');e&&e.classList.remove('show');}
+    });
+    if(!ok)return;
+    ST.firm={name:nm,sector:sec,size:document.getElementById('f-size').value,city:document.getElementById('f-city').value.trim(),contact:document.getElementById('f-contact').value.trim(),email:em,targetLv:document.getElementById('f-level').value};
+    ST.phase='quiz';render();window.scrollTo(0,0);
+  });
+
+  document.querySelectorAll('.opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const qs=qsFor(ST.lv);const q=qs[ST.qi];
+      ST.ans[q.id]=parseInt(btn.dataset.idx);
+      document.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+      btn.classList.add('sel');
+      const nb=document.getElementById('btn-next');if(nb)nb.disabled=false;
+    });
+  });
+
+  const bn=document.getElementById('btn-next');
+  if(bn)bn.addEventListener('click',()=>{
+    const tlv=parseInt(ST.firm.targetLv||25);
+    const qs=qsFor(ST.lv);
+    const isLast=ST.qi===qs.length-1;
+    const isLastLv=ST.lv===tlv;
+    if(isLast){
+      if(!isLastLv){
+        const lvls=[25,50,100];const idx=lvls.indexOf(ST.lv);const nxt=lvls[idx+1];
+        if(nxt<=tlv){ST.lv=nxt;ST.unlocked.push(nxt);ST.qi=0;}
+      } else {ST.phase='result';}
+    } else {ST.qi++;}
+    render();window.scrollTo(0,0);
+  });
+
+  const bb=document.getElementById('btn-back');
+  if(bb)bb.addEventListener('click',()=>{
+    if(ST.qi>0){ST.qi--;}
+    else{const lvls=[25,50,100];const idx=lvls.indexOf(ST.lv);if(idx>0){ST.lv=lvls[idx-1];ST.qi=qsFor(ST.lv).length-1;}}
+    render();window.scrollTo(0,0);
+  });
+
+  const bnw=document.getElementById('btn-new');
+  if(bnw)bnw.addEventListener('click',()=>{ST={phase:'intake',lv:25,qi:0,ans:{},firm:{},unlocked:[25]};render();window.scrollTo(0,0);});
+
+  const bco=document.getElementById('btn-consult');
+  if(bco)bco.addEventListener('click',()=>{
+    const p=buildPayload();
+    const body=`Merhaba,\n\nFirmamız için danışmanlık talebi oluşturmak istiyoruz.\n\nFirma: ${p.firma_adi}\nSektör: ${p.sektor}\nESG Puanı: ${p.toplam_puan}/100 (${p.olgunluk_durumu})\n\nLütfen bizimle iletişime geçiniz.`;
+    window.location.href=`mailto:?subject=Danışmanlık Talebi - ${p.firma_adi}&body=${encodeURIComponent(body)}`;
+  });
+
+  const bse=document.getElementById('btn-send-email');
+  if(bse)bse.addEventListener('click',async()=>{
+    const el=document.getElementById('send-email');
+    const sl=document.getElementById('email-status');
+    const addr=el.value.trim();
+    if(!addr||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(addr)){sl.className='status-msg err';sl.textContent='Geçerli bir e-posta giriniz.';return;}
+    bse.disabled=true;bse.textContent='...';
+    sl.className='status-msg loading';sl.textContent='Rapor içeriği oluşturuluyor...';
+    const p=buildPayload();
+    try{
+      const r=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Sen bir ESG danışmanısın. Aşağıdaki sonuçlara göre kısa, profesyonel Türkçe e-posta metni yaz. Firma: ${p.firma_adi}, Sektör: ${p.sektor}, Puan: ${p.toplam_puan}/100, Durum: ${p.olgunluk_durumu}, Öneri: ${p.onerilen_modul}. Aksiyonlar: ${p.aksiyon_onerileri.join('; ')}. Sadece e-posta gövde metnini yaz, konu satırı ekleme.`}]})
+      });
+      const d=await r.json();
+      const txt=d.content&&d.content[0]?d.content[0].text:'';
+      sl.className='status-msg ok';
+      sl.innerHTML='✓ Rapor içeriği hazır. Make.com Send Email aksiyonuna bu adresi girin: <strong>'+addr+'</strong>';
+      console.log('[SHE] Email rapor içeriği:\n',txt);
+    }catch(e){sl.className='status-msg err';sl.textContent='Hata oluştu. Lütfen tekrar deneyin.';}
+    bse.disabled=false;bse.textContent='Gönder';
+  });
+
+  const bss=document.getElementById('btn-send-sheets');
+  if(bss)bss.addEventListener('click',async()=>{
+    const ul=document.getElementById('webhook-url');
+    const sl=document.getElementById('sheets-status');
+    const url=ul.value.trim();
+    if(!url||!url.startsWith('http')){sl.className='status-msg err';sl.textContent='Geçerli bir webhook URL giriniz.';return;}
+    bss.disabled=true;bss.textContent='...';
+    sl.className='status-msg loading';sl.textContent='Make.com\'a gönderiliyor...';
+    try{
+      await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(buildPayload()),mode:'no-cors'});
+      sl.className='status-msg ok';sl.innerHTML='✓ Veri iletildi. Sheets satırı otomatik oluşturulacak.';
+    }catch(e){sl.className='status-msg err';sl.textContent='Webhook ulaşılamadı. URL\'yi kontrol edin.';}
+    bss.disabled=false;bss.textContent='Kaydet';
+  });
+}
+
+render();
+</script>
+</body>
+</html>
