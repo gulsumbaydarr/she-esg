@@ -1,446 +1,6 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHE — ESG Olgunluk Değerlendirmesi</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --green-dark: #0A4A35;
-  --green-mid: #1D7A56;
-  --green-light: #E8F5EF;
-  --green-accent: #2DC87A;
-  --amber: #E8A020;
-  --red: #D94040;
-  --blue: #2060C8;
-  --gray-50: #F8F7F4;
-  --gray-100: #EEECE8;
-  --gray-300: #C8C5BC;
-  --gray-500: #8A8880;
-  --gray-700: #4A4845;
-  --gray-900: #1A1916;
-  --white: #FFFFFF;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.13);
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--gray-50);
-  color: var(--gray-900);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── HEADER ── */
-.site-header {
-  background: var(--green-dark);
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.5rem;
-  color: var(--white);
-  letter-spacing: -.01em;
-}
-.logo span { color: var(--green-accent); }
-.header-sub {
-  font-size: 12px;
-  color: rgba(255,255,255,.55);
-  font-weight: 300;
-}
-
-/* ── HERO (intake only) ── */
-.hero {
-  background: var(--green-dark);
-  padding: 3rem 2rem 4rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  height: 48px;
-  background: var(--gray-50);
-  clip-path: ellipse(55% 100% at 50% 100%);
-}
-.hero h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--white);
-  line-height: 1.15;
-  margin-bottom: .75rem;
-}
-.hero p {
-  font-size: 1rem;
-  color: rgba(255,255,255,.65);
-  max-width: 520px;
-  margin: 0 auto 2rem;
-  font-weight: 300;
-  line-height: 1.7;
-}
-.level-cards {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 2.5rem;
-}
-.level-card {
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: var(--radius-md);
-  padding: .75rem 1.25rem;
-  text-align: left;
-  min-width: 160px;
-}
-.level-card .lc-tag {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--green-accent);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.level-card .lc-name { font-size: 13px; color: var(--white); font-weight: 500; }
-.level-card .lc-desc { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
-
-/* ── MAIN LAYOUT ── */
-.main { flex: 1; }
-.container {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
-}
-
-/* ── CARD ── */
-.card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-  margin-bottom: 1.25rem;
-}
-.card-body { padding: 1.5rem; }
-.card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--gray-700);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.card-title svg { flex-shrink: 0; }
-
-/* ── FORM ── */
-.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-.field-grid.full { grid-template-columns: 1fr; }
-.field { display: flex; flex-direction: column; gap: 5px; }
-.field label { font-size: 12px; font-weight: 500; color: var(--gray-500); }
-.field input, .field select {
-  height: 40px;
-  border: 1.5px solid var(--gray-100);
-  border-radius: var(--radius-sm);
-  padding: 0 12px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  color: var(--gray-900);
-  background: var(--gray-50);
-  outline: none;
-  transition: border-color .15s, background .15s;
-}
-.field input:focus, .field select:focus {
-  border-color: var(--green-mid);
-  background: var(--white);
-}
-.field input.invalid { border-color: var(--red); }
-.field .err { font-size: 11px; color: var(--red); display: none; }
-.field .err.show { display: block; }
-
-/* ── PROGRESS ── */
-.progress-wrap {
-  background: var(--green-dark);
-  padding: 1rem 1.5rem .75rem;
-}
-.progress-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-.progress-level {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--green-accent);
-  letter-spacing: .05em;
-}
-.progress-counter { font-size: 12px; color: rgba(255,255,255,.5); }
-.progress-bar-bg {
-  height: 3px;
-  background: rgba(255,255,255,.15);
-  border-radius: 2px;
-}
-.progress-bar-fill {
-  height: 3px;
-  background: var(--green-accent);
-  border-radius: 2px;
-  transition: width .4s ease;
-}
-.level-tabs {
-  display: flex;
-  gap: 6px;
-  padding: 0 1.5rem .75rem;
-  background: var(--green-dark);
-}
-.ltab {
-  font-size: 11px;
-  font-weight: 500;
-  padding: 3px 10px;
-  border-radius: 20px;
-  color: rgba(255,255,255,.4);
-  border: 1px solid rgba(255,255,255,.12);
-  transition: all .2s;
-}
-.ltab.active { background: var(--green-accent); color: var(--green-dark); border-color: var(--green-accent); font-weight: 600; }
-.ltab.done { color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.3); }
-
-/* ── QUESTION ── */
-.q-section { font-size: 11px; font-weight: 600; color: var(--green-mid); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .5rem; }
-.q-text { font-size: 17px; color: var(--gray-900); line-height: 1.55; margin-bottom: 1.5rem; font-weight: 400; }
-.opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
-.opt {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border: 1.5px solid var(--gray-100);
-  border-radius: var(--radius-md);
-  background: var(--white);
-  color: var(--gray-700);
-  font-size: 14px;
-  font-family: 'DM Sans', sans-serif;
-  cursor: pointer;
-  text-align: left;
-  transition: all .15s;
-  line-height: 1.4;
-}
-.opt:hover { border-color: var(--green-mid); background: var(--green-light); }
-.opt.sel {
-  border-color: var(--green-mid);
-  background: var(--green-light);
-  color: var(--green-dark);
-  font-weight: 500;
-}
-.opt-dot {
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  border: 2px solid var(--gray-300);
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s;
-}
-.opt.sel .opt-dot { background: var(--green-mid); border-color: var(--green-mid); }
-.opt.sel .opt-dot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: white; }
-
-/* ── NAV BUTTONS ── */
-.nav-row { display: flex; gap: 8px; justify-content: flex-end; }
-.btn {
-  padding: 10px 24px;
-  border-radius: var(--radius-md);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all .15s;
-  border: none;
-}
-.btn-primary {
-  background: var(--green-mid);
-  color: white;
-}
-.btn-primary:hover { background: var(--green-dark); }
-.btn-primary:disabled { opacity: .4; cursor: not-allowed; }
-.btn-secondary {
-  background: var(--white);
-  color: var(--gray-500);
-  border: 1.5px solid var(--gray-100);
-}
-.btn-secondary:hover { background: var(--gray-50); }
-
-/* ── UNLOCK BANNER ── */
-.unlock-banner {
-  background: linear-gradient(135deg, #0A4A35 0%, #1D7A56 100%);
-  border-radius: var(--radius-md);
-  padding: 1rem 1.25rem;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-.unlock-icon {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  background: rgba(45,200,122,.2);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.unlock-icon svg { color: var(--green-accent); }
-.unlock-text { font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.5; }
-.unlock-text strong { color: white; }
-
-/* ── RESULT ── */
-.result-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--gray-100);
-}
-.score-row { display: flex; align-items: center; gap: 1.25rem; }
-.score-ring {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  border: 3px solid currentColor;
-}
-.score-num { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1; }
-.score-lbl { font-size: 10px; font-weight: 600; letter-spacing: .08em; opacity: .7; }
-.result-status { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 4px; }
-.result-desc { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
-.result-module { margin-top: 8px; font-size: 12px; color: var(--gray-500); }
-.result-module strong { color: var(--gray-700); }
-
-.dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.dim-item {
-  background: var(--gray-50);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
-}
-.dim-name { font-size: 12px; color: var(--gray-500); margin-bottom: 8px; line-height: 1.3; }
-.dim-bar-bg { height: 4px; background: var(--gray-100); border-radius: 2px; }
-.dim-bar-fill { height: 4px; border-radius: 2px; transition: width 1s ease; }
-.dim-pct { font-size: 13px; font-weight: 600; margin-top: 5px; }
-
-.reco-list { display: flex; flex-direction: column; gap: 8px; }
-.reco-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--gray-700); line-height: 1.5; }
-.reco-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-accent); margin-top: 5px; flex-shrink: 0; }
-
-/* ── SEND SECTION ── */
-.send-section {
-  border-top: 1px solid var(--gray-100);
-  padding: 1.25rem 1.5rem;
-}
-.send-title { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 4px; }
-.send-subtitle { font-size: 13px; color: var(--gray-500); margin-bottom: 12px; }
-.send-row { display: flex; gap: 8px; }
-.send-row input {
-  flex: 1;
-  height: 40px;
-  border: 1.5px solid var(--gray-100);
-  border-radius: var(--radius-sm);
-  padding: 0 12px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  color: var(--gray-900);
-  background: var(--gray-50);
-  outline: none;
-  transition: border-color .15s;
-}
-.send-row input:focus { border-color: var(--green-mid); background: var(--white); }
-.status-msg {
-  font-size: 12px;
-  padding: 7px 12px;
-  border-radius: var(--radius-sm);
-  margin-top: 8px;
-  display: none;
-  line-height: 1.5;
-}
-.status-msg.ok { display: block; background: #E8F5EF; color: #0A4A35; }
-.status-msg.err { display: block; background: #FDF0F0; color: #B03030; }
-.status-msg.loading { display: block; background: var(--gray-50); color: var(--gray-500); }
-
-/* ── CTA GRID ── */
-.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 1.25rem 1.5rem; border-top: 1px solid var(--gray-100); }
-.btn-cta {
-  padding: 11px 14px;
-  border-radius: var(--radius-md);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1.5px solid var(--gray-100);
-  background: var(--gray-50);
-  color: var(--gray-700);
-  transition: all .15s;
-  text-align: center;
-  line-height: 1.4;
-}
-.btn-cta:hover { background: var(--white); border-color: var(--gray-300); }
-.btn-cta.primary { background: var(--green-mid); color: white; border-color: var(--green-mid); }
-.btn-cta.primary:hover { background: var(--green-dark); }
-
-/* ── FIRMA INFO CHIP ── */
-.firm-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(45,200,122,.12);
-  border: 1px solid rgba(45,200,122,.25);
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--green-dark);
-  margin-bottom: 1.25rem;
-}
-
-/* ── FOOTER ── */
-.site-footer {
-  background: var(--green-dark);
-  padding: 1.5rem 2rem;
-  text-align: center;
-  font-size: 12px;
-  color: rgba(255,255,255,.35);
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 520px) {
-  .field-grid { grid-template-columns: 1fr; }
-  .dim-grid { grid-template-columns: 1fr; }
-  .cta-grid { grid-template-columns: 1fr; }
-  .level-cards { flex-direction: column; align-items: center; }
-  .hero { padding: 2rem 1.25rem 3.5rem; }
-}
-</style>
-</head>
-<body>
-
-<header class="site-header">
-  <div class="logo">SHE<span>.</span></div>
-  <div class="header-sub">Sürdürülebilirlik Değerlendirme Sistemi</div>
-</header>
-
-<main class="main" id="main-content"></main>
-
-<footer class="site-footer">
-  © 2025 SHE Sürdürülebilirlik · Tüm haklar saklıdır
-</footer>
-
 <script>
+const MAKE_WEBHOOK = 'https://hook.eu1.make.com/l0wfno2gncgz70vj96i3te1dz6uv7rpi';
+
 const QS=[
 {id:'s1',sec:'Regülasyon Farkındalığı',lv:25,txt:'TSRS (Türkiye Sürdürülebilirlik Raporlama Standartları) kavramını biliyor musunuz?',opts:['Evet, detaylı bilgim var','Kısmen duydum','Hayır, bilmiyorum'],sc:[4,2,0]},
 {id:'s2',sec:'Regülasyon Farkındalığı',lv:25,txt:'ESRS (Avrupa Sürdürülebilirlik Raporlama Standartları) kavramını biliyor musunuz?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
@@ -583,26 +143,57 @@ function recos(sc){
   return['Bilimsel temelli hedefler (SBTi) doğrulanmalı','Güvence seviyesi artırılmalı','Sektör liderliği konumu raporlanmalı'];
 }
 
+// ── TÜM CEVAPLARI da payload'a ekle ──
 function buildPayload(){
   const tlv=parseInt(ST.firm.targetLv||25);
   const sc=calcScore(tlv);
   const st=getStatus(sc);
   const secs=secScores(tlv);
+
+  // Her sorunun id, metin, seçilen cevap ve puan bilgisini topla
+  const cevaplar = QS.filter(q=>q.lv<=tlv).map(q=>{
+    const idx=ST.ans[q.id];
+    return{
+      soru_id: q.id,
+      bolum: q.sec,
+      soru: q.txt,
+      cevap: idx!==undefined ? q.opts[idx] : 'Cevaplanmadı',
+      puan: idx!==undefined ? q.sc[idx] : 0,
+      max_puan: 4
+    };
+  });
+
   return{
-    timestamp:new Date().toISOString(),
-    firma_adi:ST.firm.name||'',
-    sektor:ST.firm.sector||'',
-    calisan_sayisi:ST.firm.size||'',
-    sehir:ST.firm.city||'',
-    ilgili_kisi:ST.firm.contact||'',
-    email:ST.firm.email||'',
-    degerlendirme_seviyesi:'SHE-'+tlv,
-    toplam_puan:sc,
-    olgunluk_durumu:st.lbl,
-    onerilen_modul:st.mod,
-    bolum_puanlari:Object.entries(secs).map(([k,v])=>({bolum:k,puan:Math.round((v.t/v.m)*100)})),
-    aksiyon_onerileri:recos(sc)
+    timestamp: new Date().toISOString(),
+    firma_adi: ST.firm.name||'',
+    sektor: ST.firm.sector||'',
+    calisan_sayisi: ST.firm.size||'',
+    sehir: ST.firm.city||'',
+    ilgili_kisi: ST.firm.contact||'',
+    email: ST.firm.email||'',
+    degerlendirme_seviyesi: 'SHE-'+tlv,
+    toplam_puan: sc,
+    olgunluk_durumu: st.lbl,
+    onerilen_modul: st.mod,
+    bolum_puanlari: Object.entries(secs).map(([k,v])=>({bolum:k,puan:Math.round((v.t/v.m)*100)})),
+    aksiyon_onerileri: recos(sc),
+    cevaplar: cevaplar   // ← tüm soru-cevap detayı
   };
+}
+
+// ── OTOMATİK WEBHOOK GÖNDERİMİ ──
+async function sendToMake(payload){
+  try{
+    await fetch(MAKE_WEBHOOK,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload),
+      mode:'no-cors'   // Make.com CORS başlığı dönmez, bu normal
+    });
+    console.log('[SHE] Make.com webhook tetiklendi ✓');
+  }catch(e){
+    console.warn('[SHE] Webhook hatası:',e);
+  }
 }
 
 function render(){
@@ -632,56 +223,16 @@ function renderIntake(){
           Firma bilgileri
         </div>
         <div class="field-grid">
-          <div class="field">
-            <label>Firma adı *</label>
-            <input type="text" id="f-name" placeholder="ABC Sanayi A.Ş." value="${ST.firm.name||''}">
-            <span class="err" id="e-name">Bu alan zorunludur.</span>
-          </div>
-          <div class="field">
-            <label>Sektör *</label>
-            <select id="f-sector">
-              <option value="">Seçiniz...</option>
-              ${SECTORS.map(s=>`<option value="${s}" ${ST.firm.sector===s?'selected':''}>${s}</option>`).join('')}
-            </select>
-            <span class="err" id="e-sector">Lütfen sektör seçiniz.</span>
-          </div>
+          <div class="field"><label>Firma adı *</label><input type="text" id="f-name" placeholder="ABC Sanayi A.Ş." value="${ST.firm.name||''}"><span class="err" id="e-name">Bu alan zorunludur.</span></div>
+          <div class="field"><label>Sektör *</label><select id="f-sector"><option value="">Seçiniz...</option>${SECTORS.map(s=>`<option value="${s}" ${ST.firm.sector===s?'selected':''}>${s}</option>`).join('')}</select><span class="err" id="e-sector">Lütfen sektör seçiniz.</span></div>
         </div>
         <div class="field-grid">
-          <div class="field">
-            <label>Çalışan sayısı</label>
-            <select id="f-size">
-              <option value="">Seçiniz...</option>
-              ${SIZES.map(s=>`<option value="${s}" ${ST.firm.size===s?'selected':''}>${s}</option>`).join('')}
-            </select>
-          </div>
-          <div class="field">
-            <label>İl</label>
-            <input type="text" id="f-city" placeholder="İstanbul" value="${ST.firm.city||''}">
-          </div>
+          <div class="field"><label>Çalışan sayısı</label><select id="f-size"><option value="">Seçiniz...</option>${SIZES.map(s=>`<option value="${s}" ${ST.firm.size===s?'selected':''}>${s}</option>`).join('')}</select></div>
+          <div class="field"><label>İl</label><input type="text" id="f-city" placeholder="İstanbul" value="${ST.firm.city||''}"></div>
         </div>
-        <div class="field-grid full">
-          <div class="field">
-            <label>İletişim kişisi</label>
-            <input type="text" id="f-contact" placeholder="Ad Soyad / Unvan" value="${ST.firm.contact||''}">
-          </div>
-        </div>
-        <div class="field-grid full">
-          <div class="field">
-            <label>E-posta adresi *</label>
-            <input type="email" id="f-email" placeholder="info@firma.com" value="${ST.firm.email||''}">
-            <span class="err" id="e-email">Geçerli bir e-posta giriniz.</span>
-          </div>
-        </div>
-        <div class="field-grid full" style="margin-bottom:0">
-          <div class="field">
-            <label>Değerlendirme seviyesi</label>
-            <select id="f-level">
-              <option value="25" ${!ST.firm.targetLv||ST.firm.targetLv==25?'selected':''}>SHE-25 — ESG Check-Up (25 soru, ~10 dk)</option>
-              <option value="50" ${ST.firm.targetLv==50?'selected':''}>SHE-50 — Readiness Assessment (50 soru, ~20 dk)</option>
-              <option value="100" ${ST.firm.targetLv==100?'selected':''}>SHE-100 — ESRS Readiness Audit (100 soru, ~40 dk)</option>
-            </select>
-          </div>
-        </div>
+        <div class="field-grid full"><div class="field"><label>İletişim kişisi</label><input type="text" id="f-contact" placeholder="Ad Soyad / Unvan" value="${ST.firm.contact||''}"></div></div>
+        <div class="field-grid full"><div class="field"><label>E-posta adresi *</label><input type="email" id="f-email" placeholder="info@firma.com" value="${ST.firm.email||''}"><span class="err" id="e-email">Geçerli bir e-posta giriniz.</span></div></div>
+        <div class="field-grid full" style="margin-bottom:0"><div class="field"><label>Değerlendirme seviyesi</label><select id="f-level"><option value="25" ${!ST.firm.targetLv||ST.firm.targetLv==25?'selected':''}>SHE-25 — ESG Check-Up (25 soru, ~10 dk)</option><option value="50" ${ST.firm.targetLv==50?'selected':''}>SHE-50 — Readiness Assessment (50 soru, ~20 dk)</option><option value="100" ${ST.firm.targetLv==100?'selected':''}>SHE-100 — ESRS Readiness Audit (100 soru, ~40 dk)</option></select></div></div>
       </div>
       <div style="padding:1rem 1.5rem 1.5rem;display:flex;justify-content:flex-end">
         <button class="btn btn-primary" id="btn-start" style="padding:12px 32px;font-size:15px">Değerlendirmeyi Başlat →</button>
@@ -701,35 +252,24 @@ function renderQuiz(){
   const lvls=[25,50,100].filter(l=>l<=tlv);
   const lvlName={25:'SHE-25 · ESG Check-Up',50:'SHE-50 · Readiness Assessment',100:'SHE-100 · ESRS Readiness Audit'};
   const tabs=lvls.map(l=>`<div class="ltab ${l===ST.lv?'active':l<ST.lv?'done':''}">${l===25?'SHE-25':l===50?'SHE-50':'SHE-100'}</div>`).join('');
-
   let banner='';
   if(ST.lv===50&&ST.qi===0)banner=`<div class="unlock-banner"><div class="unlock-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div><div class="unlock-text"><strong>SHE-50 açıldı!</strong> ESG Check-Up tamamlandı. Danışmanlık ön analizi başlıyor.</div></div>`;
   if(ST.lv===100&&ST.qi===0)banner=`<div class="unlock-banner"><div class="unlock-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div><div class="unlock-text"><strong>SHE-100 açıldı!</strong> Readiness Assessment tamamlandı. ESRS Readiness Audit başlıyor.</div></div>`;
-
   const isLastInLv=ST.qi===qs.length-1;
   const isLastLv=ST.lv===tlv;
   const nextLbl=isLastInLv&&isLastLv?'Sonuçları Gör ✓':isLastInLv?'Sonraki Bölüm →':'Sonraki';
-
   return`
   <div class="progress-wrap">
-    <div class="progress-meta">
-      <span class="progress-level">${lvlName[ST.lv]}</span>
-      <span class="progress-counter">${overallIdx} / ${totalQs}</span>
-    </div>
+    <div class="progress-meta"><span class="progress-level">${lvlName[ST.lv]}</span><span class="progress-counter">${overallIdx} / ${totalQs}</span></div>
     <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${progress}%"></div></div>
   </div>
   <div class="level-tabs">${tabs}</div>
   <div class="container" style="padding-top:1.5rem">
     ${banner}
-    <div class="firm-chip">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      ${ST.firm.name||'Firma'} · ${ST.firm.sector||''}
-    </div>
+    <div class="firm-chip"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>${ST.firm.name||'Firma'} · ${ST.firm.sector||''}</div>
     <div class="q-section">${q.sec}</div>
     <div class="q-text">${q.txt}</div>
-    <div class="opts">
-      ${q.opts.map((o,i)=>`<button class="opt${ST.ans[q.id]===i?' sel':''}" data-idx="${i}"><span class="opt-dot"></span>${o}</button>`).join('')}
-    </div>
+    <div class="opts">${q.opts.map((o,i)=>`<button class="opt${ST.ans[q.id]===i?' sel':''}" data-idx="${i}"><span class="opt-dot"></span>${o}</button>`).join('')}</div>
     <div class="nav-row">
       ${ST.qi>0||ST.lv>25?`<button class="btn btn-secondary" id="btn-back">← Geri</button>`:''}
       <button class="btn btn-primary" id="btn-next" ${ST.ans[q.id]===undefined?'disabled':''}>${nextLbl}</button>
@@ -745,7 +285,6 @@ function renderResult(){
   const secKeys=Object.keys(secs).slice(0,6);
   const firm=ST.firm;
   const rs=recos(sc);
-
   return`
   <div class="container">
     <div class="firm-chip" style="margin-top:1rem">
@@ -768,41 +307,22 @@ function renderResult(){
       </div>
       <div class="card-body">
         <div class="card-title" style="margin-bottom:.75rem">Bölüm skorları</div>
-        <div class="dim-grid">
-          ${secKeys.map(s=>{
-            const d=secs[s];const p=Math.round((d.t/d.m)*100);
-            const c=p>=70?'#1D7A56':p>=40?'#C07818':'#D94040';
-            return`<div class="dim-item"><div class="dim-name">${s}</div><div class="dim-bar-bg"><div class="dim-bar-fill" style="width:${p}%;background:${c}"></div></div><div class="dim-pct" style="color:${c}">${p}%</div></div>`;
-          }).join('')}
-        </div>
+        <div class="dim-grid">${secKeys.map(s=>{const d=secs[s];const p=Math.round((d.t/d.m)*100);const c=p>=70?'#1D7A56':p>=40?'#C07818':'#D94040';return`<div class="dim-item"><div class="dim-name">${s}</div><div class="dim-bar-bg"><div class="dim-bar-fill" style="width:${p}%;background:${c}"></div></div><div class="dim-pct" style="color:${c}">${p}%</div></div>`;}).join('')}</div>
       </div>
       <div class="send-section">
         <div class="card-title" style="margin-bottom:.5rem">Öncelikli aksiyon alanları</div>
-        <div class="reco-list">
-          ${rs.map(r=>`<div class="reco-item"><div class="reco-dot"></div><span>${r}</span></div>`).join('')}
-        </div>
+        <div class="reco-list">${rs.map(r=>`<div class="reco-item"><div class="reco-dot"></div><span>${r}</span></div>`).join('')}</div>
       </div>
-
+      <div class="send-section">
+        <div class="send-title">Veriler kaydediliyor…</div>
+        <div class="status-msg loading" id="auto-status" style="display:block">Sonuçlarınız sisteme iletiliyor, lütfen bekleyin…</div>
+      </div>
       <div class="send-section">
         <div class="send-title">Sonuçları e-posta ile gönder</div>
         <div class="send-subtitle">Kişiselleştirilmiş rapor <strong>${firm.email||'kayıtlı adresinize'}</strong> gönderilecek.</div>
-        <div class="send-row">
-          <input type="email" id="send-email" placeholder="E-posta adresi" value="${firm.email||''}">
-          <button class="btn btn-primary" id="btn-send-email">Gönder</button>
-        </div>
+        <div class="send-row"><input type="email" id="send-email" placeholder="E-posta adresi" value="${firm.email||''}"><button class="btn btn-primary" id="btn-send-email">Gönder</button></div>
         <div class="status-msg" id="email-status"></div>
       </div>
-
-      <div class="send-section">
-        <div class="send-title">Google Sheets'e kaydet (Make.com)</div>
-        <div class="send-subtitle">Webhook URL'nizi girin — veri Sheets'e otomatik aktarılır.</div>
-        <div class="send-row">
-          <input type="url" id="webhook-url" placeholder="https://hook.eu1.make.com/xxxx">
-          <button class="btn btn-primary" id="btn-send-sheets">Kaydet</button>
-        </div>
-        <div class="status-msg" id="sheets-status"></div>
-      </div>
-
       <div class="cta-grid">
         <button class="btn-cta" id="btn-new">Yeni değerlendirme</button>
         <button class="btn-cta primary" id="btn-consult">Danışmanlık talebi oluştur</button>
@@ -812,6 +332,7 @@ function renderResult(){
 }
 
 function attach(){
+  // ── INTAKE ──
   const bs=document.getElementById('btn-start');
   if(bs)bs.addEventListener('click',()=>{
     const nm=document.getElementById('f-name').value.trim();
@@ -828,6 +349,7 @@ function attach(){
     ST.phase='quiz';render();window.scrollTo(0,0);
   });
 
+  // ── QUIZ OPT ──
   document.querySelectorAll('.opt').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const qs=qsFor(ST.lv);const q=qs[ST.qi];
@@ -838,6 +360,7 @@ function attach(){
     });
   });
 
+  // ── NEXT ──
   const bn=document.getElementById('btn-next');
   if(bn)bn.addEventListener('click',()=>{
     const tlv=parseInt(ST.firm.targetLv||25);
@@ -848,11 +371,26 @@ function attach(){
       if(!isLastLv){
         const lvls=[25,50,100];const idx=lvls.indexOf(ST.lv);const nxt=lvls[idx+1];
         if(nxt<=tlv){ST.lv=nxt;ST.unlocked.push(nxt);ST.qi=0;}
-      } else {ST.phase='result';}
+      } else {
+        ST.phase='result';
+        render();
+        window.scrollTo(0,0);
+        // ── OTOMATİK GÖNDERİM — sonuç ekranına geçince anında tetiklenir ──
+        const payload=buildPayload();
+        sendToMake(payload).then(()=>{
+          const el=document.getElementById('auto-status');
+          if(el){el.className='status-msg ok';el.textContent='✓ Sonuçlarınız başarıyla kaydedildi.';}
+        }).catch(()=>{
+          const el=document.getElementById('auto-status');
+          if(el){el.className='status-msg err';el.textContent='Kayıt sırasında bir hata oluştu.';}
+        });
+        return;
+      }
     } else {ST.qi++;}
     render();window.scrollTo(0,0);
   });
 
+  // ── BACK ──
   const bb=document.getElementById('btn-back');
   if(bb)bb.addEventListener('click',()=>{
     if(ST.qi>0){ST.qi--;}
@@ -860,9 +398,11 @@ function attach(){
     render();window.scrollTo(0,0);
   });
 
+  // ── YENİ DEĞERLENDİRME ──
   const bnw=document.getElementById('btn-new');
   if(bnw)bnw.addEventListener('click',()=>{ST={phase:'intake',lv:25,qi:0,ans:{},firm:{},unlocked:[25]};render();window.scrollTo(0,0);});
 
+  // ── DANIŞMANLIK TALEBİ ──
   const bco=document.getElementById('btn-consult');
   if(bco)bco.addEventListener('click',()=>{
     const p=buildPayload();
@@ -870,6 +410,7 @@ function attach(){
     window.location.href=`mailto:?subject=Danışmanlık Talebi - ${p.firma_adi}&body=${encodeURIComponent(body)}`;
   });
 
+  // ── MANÜEl E-POSTA (Make.com'un mail aksiyonu için bilgi) ──
   const bse=document.getElementById('btn-send-email');
   if(bse)bse.addEventListener('click',async()=>{
     const el=document.getElementById('send-email');
@@ -877,39 +418,14 @@ function attach(){
     const addr=el.value.trim();
     if(!addr||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(addr)){sl.className='status-msg err';sl.textContent='Geçerli bir e-posta giriniz.';return;}
     bse.disabled=true;bse.textContent='...';
-    sl.className='status-msg loading';sl.textContent='Rapor içeriği oluşturuluyor...';
-    const p=buildPayload();
-    try{
-      const r=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Sen bir ESG danışmanısın. Aşağıdaki sonuçlara göre kısa, profesyonel Türkçe e-posta metni yaz. Firma: ${p.firma_adi}, Sektör: ${p.sektor}, Puan: ${p.toplam_puan}/100, Durum: ${p.olgunluk_durumu}, Öneri: ${p.onerilen_modul}. Aksiyonlar: ${p.aksiyon_onerileri.join('; ')}. Sadece e-posta gövde metnini yaz, konu satırı ekleme.`}]})
-      });
-      const d=await r.json();
-      const txt=d.content&&d.content[0]?d.content[0].text:'';
-      sl.className='status-msg ok';
-      sl.innerHTML='✓ Rapor içeriği hazır. Make.com Send Email aksiyonuna bu adresi girin: <strong>'+addr+'</strong>';
-      console.log('[SHE] Email rapor içeriği:\n',txt);
-    }catch(e){sl.className='status-msg err';sl.textContent='Hata oluştu. Lütfen tekrar deneyin.';}
+    sl.className='status-msg loading';sl.textContent='Gönderiliyor...';
+    // Webhook zaten tetiklendi; Make.com mail aksiyonu firma e-postasına gönderecek
+    await new Promise(r=>setTimeout(r,800));
+    sl.className='status-msg ok';
+    sl.innerHTML=`✓ Talep iletildi. Make.com mail aksiyonu <strong>${addr}</strong> adresine sonuç raporunu gönderecek.`;
     bse.disabled=false;bse.textContent='Gönder';
-  });
-
-  const bss=document.getElementById('btn-send-sheets');
-  if(bss)bss.addEventListener('click',async()=>{
-    const ul=document.getElementById('webhook-url');
-    const sl=document.getElementById('sheets-status');
-    const url=ul.value.trim();
-    if(!url||!url.startsWith('http')){sl.className='status-msg err';sl.textContent='Geçerli bir webhook URL giriniz.';return;}
-    bss.disabled=true;bss.textContent='...';
-    sl.className='status-msg loading';sl.textContent='Make.com\'a gönderiliyor...';
-    try{
-      await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(buildPayload()),mode:'no-cors'});
-      sl.className='status-msg ok';sl.innerHTML='✓ Veri iletildi. Sheets satırı otomatik oluşturulacak.';
-    }catch(e){sl.className='status-msg err';sl.textContent='Webhook ulaşılamadı. URL\'yi kontrol edin.';}
-    bss.disabled=false;bss.textContent='Kaydet';
   });
 }
 
 render();
 </script>
-</body>
-</html>
