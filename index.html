@@ -1,431 +1,1787 @@
-<script>
-const MAKE_WEBHOOK = 'https://hook.eu1.make.com/l0wfno2gncgz70vj96i3te1dz6uv7rpi';
-
-const QS=[
-{id:'s1',sec:'Regülasyon Farkındalığı',lv:25,txt:'TSRS (Türkiye Sürdürülebilirlik Raporlama Standartları) kavramını biliyor musunuz?',opts:['Evet, detaylı bilgim var','Kısmen duydum','Hayır, bilmiyorum'],sc:[4,2,0]},
-{id:'s2',sec:'Regülasyon Farkındalığı',lv:25,txt:'ESRS (Avrupa Sürdürülebilirlik Raporlama Standartları) kavramını biliyor musunuz?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s3',sec:'Regülasyon Farkındalığı',lv:25,txt:'CBAM (Karbon Sınır Düzenleme Mekanizması) şirketinizi etkileyebilir mi?',opts:['Evet, etkisi var','Emin değilim','Hayır'],sc:[4,2,0]},
-{id:'s4',sec:'Regülasyon Farkındalığı',lv:25,txt:'Sürdürülebilirlik raporlaması kapsamında olup olmadığınızı biliyor musunuz?',opts:['Evet','Emin değilim','Hayır'],sc:[4,2,0]},
-{id:'s5',sec:'Yönetim',lv:25,txt:'Yönetim kurulu sürdürülebilirliği gündemine alıyor mu?',opts:['Düzenli','Ara sıra','Hiç'],sc:[4,2,0]},
-{id:'s6',sec:'Yönetim',lv:25,txt:'Sürdürülebilirlikten sorumlu atanmış kişi var mı?',opts:['Evet, tam zamanlı','Kısmen sorumlu','Hayır'],sc:[4,2,0]},
-{id:'s7',sec:'Yönetim',lv:25,txt:'Sürdürülebilirlik komitesi var mı?',opts:['Var ve aktif','Kuruluyor','Yok'],sc:[4,2,0]},
-{id:'s8',sec:'DMA ve IRO',lv:25,txt:'Çifte Önemlilik Analizi (DMA) kavramını biliyor musunuz?',opts:['Evet, uyguluyoruz','Biliyorum, uygulamadık','Hayır'],sc:[4,2,0]},
-{id:'s9',sec:'DMA ve IRO',lv:25,txt:'IRO (Impact, Risk, Opportunity) kavramını biliyor musunuz?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s10',sec:'DMA ve IRO',lv:25,txt:'Paydaş analizi yaptınız mı?',opts:['Evet, dokümanlandı','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s11',sec:'DMA ve IRO',lv:25,txt:'DMA çalışması tamamlandı mı?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
-{id:'s12',sec:'DMA ve IRO',lv:25,txt:'IRO çalışması tamamlandı mı?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
-{id:'s13',sec:'ESG Verisi',lv:25,txt:'Enerji tüketimleri düzenli takip ediliyor mu?',opts:['Evet, sistematik','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s14',sec:'ESG Verisi',lv:25,txt:'Su tüketimleri düzenli takip ediliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s15',sec:'ESG Verisi',lv:25,txt:'Atık verileri düzenli takip ediliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s16',sec:'ESG Verisi',lv:25,txt:'İnsan kaynakları verileri düzenli takip ediliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s17',sec:'Karbon',lv:25,txt:'Scope 1 (doğrudan emisyonlar) hesaplanıyor mu?',opts:['Evet, doğrulanmış','Devam ediyor','Hayır'],sc:[4,2,0]},
-{id:'s18',sec:'Karbon',lv:25,txt:'Scope 2 (satın alınan enerji emisyonları) hesaplanıyor mu?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
-{id:'s19',sec:'Karbon',lv:25,txt:'Scope 3 (değer zinciri emisyonları) hesaplanıyor mu?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
-{id:'s20',sec:'Karbon',lv:25,txt:'Karbon ayak izi raporu hazırlandı mı?',opts:['Evet, yayınlandı','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s21',sec:'Raporlama',lv:25,txt:'Sürdürülebilirlik raporu yayınlandı mı?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s22',sec:'Raporlama',lv:25,txt:'Hangi standartta raporlama yapılıyor?',opts:['GRI / TSRS / ESRS','Karma yaklaşım','Henüz yok'],sc:[4,2,0]},
-{id:'s23',sec:'Raporlama',lv:25,txt:'Bağımsız doğrulama (güvence) yaptırıldı mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s24',sec:'Talep',lv:25,txt:'Müşteriler ESG verisi talep ediyor mu?',opts:['Evet, aktif','Ara sıra','Hayır'],sc:[4,2,0]},
-{id:'s25',sec:'Talep',lv:25,txt:'Bankalar / finansörler ESG verisi talep ediyor mu?',opts:['Evet','Ara sıra','Hayır'],sc:[4,2,0]},
-{id:'s26',sec:'ESRS 1',lv:50,txt:'Raporlama kapsamına alınan tesisler tanımlı mı?',opts:['Evet, dokümanlandı','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s27',sec:'ESRS 1',lv:50,txt:'Hariç bırakılan tesisler gerekçelendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s28',sec:'ESRS 1',lv:50,txt:'Operasyonel kontrol yaklaşımı belirlenmiş mi?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-{id:'s29',sec:'ESRS 1',lv:50,txt:'Finansal kontrol yaklaşımı belirlenmiş mi?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-{id:'s30',sec:'ESRS 1',lv:50,txt:'Raporlama sınırları dokümante edilmiş mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s31',sec:'Değer Zinciri',lv:50,txt:'Tedarikçiler ESG açısından sınıflandırıldı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s32',sec:'Değer Zinciri',lv:50,txt:'Kritik tedarikçiler tanımlandı mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-{id:'s33',sec:'Değer Zinciri',lv:50,txt:'AB müşterilerinden ESG talebi geliyor mu?',opts:['Aktif talep var','Ara sıra','Hayır'],sc:[4,2,0]},
-{id:'s34',sec:'Değer Zinciri',lv:50,txt:'Değer zinciri riskleri değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s35',sec:'Değer Zinciri',lv:50,txt:'Scope 3 stratejisi mevcut mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s36',sec:'ESRS 2 Yönetişim',lv:50,txt:'Yönetim kurulunda ESG sorumluluğu resmi olarak tanımlı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s37',sec:'ESRS 2 Yönetişim',lv:50,txt:'ESG performansı üst yönetime raporlanıyor mu?',opts:['Düzenli','Ara sıra','Hayır'],sc:[4,2,0]},
-{id:'s38',sec:'ESRS 2 Yönetişim',lv:50,txt:'Yönetim ESG hedeflerini izliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s39',sec:'ESRS 2 Yönetişim',lv:50,txt:'ESG KPI seti oluşturuldu mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s40',sec:'ESRS 2 Yönetişim',lv:50,txt:'ESG performans raporu hazırlanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s41',sec:'Veri Güvenilirliği',lv:50,txt:'Veri sahipleri tanımlı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s42',sec:'Veri Güvenilirliği',lv:50,txt:'Kanıt dokümanları düzenli tutuluyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s43',sec:'Veri Güvenilirliği',lv:50,txt:'Veri doğrulama süreci mevcut mu?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s44',sec:'Veri Güvenilirliği',lv:50,txt:'Veri eksiklikleri kayıt altına alınıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s45',sec:'Veri Güvenilirliği',lv:50,txt:'Denetim izi oluşturulabiliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s46',sec:'Hedefler',lv:50,txt:'Karbon azaltım hedefi belirlenmiş mi?',opts:['Evet, bilimsel temelli','Genel hedef var','Hayır'],sc:[4,2,0]},
-{id:'s47',sec:'Hedefler',lv:50,txt:'Enerji verimliliği hedefi var mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s48',sec:'Hedefler',lv:50,txt:'İSG hedefleri var mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s49',sec:'Hedefler',lv:50,txt:'Sosyal hedefler var mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s50',sec:'Hedefler',lv:50,txt:'Bu hedefler ölçülüyor ve izleniyor mu?',opts:['Evet, sistematik','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s51',sec:'DMA Derinlik',lv:100,txt:'E1 İklim Değişikliği DMA kapsamında değerlendirildi mi?',opts:['Evet','Devam ediyor','Hayır'],sc:[4,2,0]},
-{id:'s52',sec:'DMA Derinlik',lv:100,txt:'E2 Kirlilik değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s53',sec:'DMA Derinlik',lv:100,txt:'E3 Su ve Deniz Kaynakları değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s54',sec:'DMA Derinlik',lv:100,txt:'E4 Biyoçeşitlilik değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s55',sec:'DMA Derinlik',lv:100,txt:'E5 Döngüsel Ekonomi değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s56',sec:'DMA Derinlik',lv:100,txt:'S1 Kendi Çalışanlar değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s57',sec:'DMA Derinlik',lv:100,txt:'S2 Değer Zinciri Çalışanları değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s58',sec:'DMA Derinlik',lv:100,txt:'S3 Etkilenen Topluluklar değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s59',sec:'DMA Derinlik',lv:100,txt:'S4 Tüketiciler değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s60',sec:'DMA Derinlik',lv:100,txt:'G1-G2 Yönetişim konuları değerlendirildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s61',sec:'IRO Derinliği',lv:100,txt:'Önemli konular için etki (Impact) tanımlandı mı?',opts:['Evet, hepsi','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s62',sec:'IRO Derinliği',lv:100,txt:'Risk tanımlandı mı?',opts:['Evet, hepsi','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s63',sec:'IRO Derinliği',lv:100,txt:'Fırsat tanımlandı mı?',opts:['Evet, hepsi','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s64',sec:'IRO Derinliği',lv:100,txt:'Finansal etki değerlendirmesi yapıldı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s65',sec:'IRO Derinliği',lv:100,txt:'Her IRO için sorumlu atandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s66',sec:'IRO Derinliği',lv:100,txt:'Aksiyonlar tanımlandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s67',sec:'IRO Derinliği',lv:100,txt:"KPI'lar belirlendi mi?",opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s68',sec:'IRO Derinliği',lv:100,txt:'Hedefler belirlendi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s69',sec:'IRO Derinliği',lv:100,txt:'IRO aksiyonları için bütçe ayrıldı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s70',sec:'IRO Derinliği',lv:100,txt:'İzleme mekanizması kuruldu mu?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s71',sec:'Hazırlık Temeli',lv:100,txt:'Veri sınırlılıkları dokümante edildi mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s72',sec:'Hazırlık Temeli',lv:100,txt:'Ölçüm varsayımları tanımlandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s73',sec:'Hazırlık Temeli',lv:100,txt:'Ölçüm belirsizlikleri raporlandı mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s74',sec:'Hazırlık Temeli',lv:100,txt:'Karşılaştırmalı dönem verisi hazır mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s75',sec:'Hazırlık Temeli',lv:100,txt:'Önceki dönem düzeltmeleri yönetilebiliyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s76',sec:'Scope Olgunluğu',lv:100,txt:'Tüm tesislerde Scope 1 hesaplanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s77',sec:'Scope Olgunluğu',lv:100,txt:'Tüm tesislerde Scope 2 hesaplanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s78',sec:'Scope Olgunluğu',lv:100,txt:'Scope 3 kategori bazında hesaplanıyor mu?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s79',sec:'Scope Olgunluğu',lv:100,txt:'Emisyon faktörleri dokümante edilmiş mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s80',sec:'Scope Olgunluğu',lv:100,txt:'Veri kaynakları sınıflandırılmış mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s81',sec:'Raporlama ve Güvence',lv:100,txt:'ESRS uyum matrisi oluşturuldu mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s82',sec:'Raporlama ve Güvence',lv:100,txt:'TSRS uyum matrisi oluşturuldu mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s83',sec:'Raporlama ve Güvence',lv:100,txt:'Denetim dosyası hazır mı?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s84',sec:'Raporlama ve Güvence',lv:100,txt:'Kanıt klasörleri hazır mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s85',sec:'Raporlama ve Güvence',lv:100,txt:'İç doğrulama yapıldı mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s86',sec:'Yeşil Finansman',lv:100,txt:'Yeşil kredi / sürdürülebilir finansman kullanıldı mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-{id:'s87',sec:'Yeşil Finansman',lv:100,txt:'Sürdürülebilir finansman stratejisi mevcut mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s88',sec:'Yeşil Finansman',lv:100,txt:'ESG performansı finansal risk analizine dahil mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s89',sec:'Yeşil Finansman',lv:100,txt:'İklim riskleri finansal planlamaya dahil mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s90',sec:'Yeşil Finansman',lv:100,txt:'AB Taksonomisi uyumu değerlendirildi mi?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-{id:'s91',sec:'Dijital Olgunluk',lv:100,txt:'ESG yazılımı / platformu kullanılıyor mu?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-{id:'s92',sec:'Dijital Olgunluk',lv:100,txt:'Veriler merkezi bir sistemde mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s93',sec:'Dijital Olgunluk',lv:100,txt:'Otomatik veri toplama var mı?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s94',sec:'Dijital Olgunluk',lv:100,txt:'ESG dashboard kullanılıyor mu?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s95',sec:'Dijital Olgunluk',lv:100,txt:"KPI'lar gerçek zamanlı izleniyor mu?",opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s96',sec:'Kurumsal Olgunluk',lv:100,txt:'Yazılı ESG stratejisi mevcut mu?',opts:['Evet','Hazırlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s97',sec:'Kurumsal Olgunluk',lv:100,txt:'2030 hedefleri belirlenmiş mi?',opts:['Evet','Kısmen','Hayır'],sc:[4,2,0]},
-{id:'s98',sec:'Kurumsal Olgunluk',lv:100,txt:'2050 uzun vadeli hedefler var mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-{id:'s99',sec:'Kurumsal Olgunluk',lv:100,txt:'Sürdürülebilirlik bütçesi ayrıldı mı?',opts:['Evet','Planlanıyor','Hayır'],sc:[4,2,0]},
-{id:'s100',sec:'Kurumsal Olgunluk',lv:100,txt:'Sürdürülebilirlik performansı yönetim prim sistemine bağlı mı?',opts:['Evet','Değerlendiriliyor','Hayır'],sc:[4,2,0]},
-];
-
-const SECTORS=['İmalat / Üretim','Tekstil / Hazır Giyim','Gıda ve İçecek','İnşaat / GYO','Enerji / Utilities','Lojistik / Taşımacılık','Finans / Sigortacılık','Perakende / Ticaret','Turizm / Otelcilik','Tarım / Ormancılık','Sağlık','Teknoloji / Yazılım','Diğer'];
-const SIZES=['1–9 (Mikro)','10–49 (Küçük)','50–249 (Orta)','250+ (Büyük)'];
-
-const STATUS_MAP=[
-  {mn:0,mx:20,lbl:'Habersiz',col:'#D94040',mod:'Modül 1',desc:'Sürdürülebilirlik farkındalığı henüz oluşmamış. Temel kavramlardan başlayan eğitim paketi önerilir.'},
-  {mn:21,mx:40,lbl:'Başlangıç',col:'#C07818',mod:'Modül 1–2',desc:'Farkındalık var ancak sistemli yaklaşım geliştirilmeli. Yönetim taahhüdü kritik öncelik.'},
-  {mn:41,mx:60,lbl:'Hazırlık',col:'#2060C8',mod:'Modül 2–3–4',desc:'Temel altyapı kuruluyor. DMA, veri yönetimi ve hedef belirleme süreçlerine odaklanılmalı.'},
-  {mn:61,mx:80,lbl:'İlk Raporlama',col:'#2A6010',mod:'Modül 4–5',desc:'Raporlama olgunluğuna yaklaşılıyor. ESRS uyum matrisi ve denetim dosyası hazırlığı öncelikli.'},
-  {mn:81,mx:90,lbl:'Uyumlu',col:'#0A6040',mod:'Modül 5–6',desc:'Uyum düzeyi yüksek. Güvence hazırlığı ve dijital entegrasyon sonraki adım.'},
-  {mn:91,mx:100,lbl:'Lider',col:'#4030A0',mod:'İleri Uzmanlık',desc:'Sektörde lider konumunda. Bilimsel hedefler ve güvence seviyesi artırımı gündemde olmalı.'},
-];
-
-let ST={phase:'intake',lv:25,qi:0,ans:{},firm:{},unlocked:[25]};
-
-function qsFor(lv){return QS.filter(q=>q.lv===lv);}
-function calcScore(maxLv){
-  let t=0,m=0;
-  QS.filter(q=>q.lv<=maxLv).forEach(q=>{if(ST.ans[q.id]!==undefined)t+=q.sc[ST.ans[q.id]];m+=4;});
-  return m?Math.round((t/m)*100):0;
-}
-function secScores(maxLv){
-  const s={};
-  QS.filter(q=>q.lv<=maxLv).forEach(q=>{
-    if(!s[q.sec])s[q.sec]={t:0,m:0};
-    if(ST.ans[q.id]!==undefined)s[q.sec].t+=q.sc[ST.ans[q.id]];
-    s[q.sec].m+=4;
-  });
-  return s;
-}
-function getStatus(sc){return STATUS_MAP.find(s=>sc>=s.mn&&sc<=s.mx)||STATUS_MAP[0];}
-function recos(sc){
-  if(sc<=20)return['Yönetim taahhüdü ve ESG farkındalığı oluşturulmalı','TSRS ve ESRS temel kavramları öğrenilmeli','ESG veri takibi için ilk adımlar atılmalı'];
-  if(sc<=40)return['Sürdürülebilirlik sorumlusu atanmalı','Temel ESG verileri takibe alınmalı','Paydaş analizi yapılmalı'];
-  if(sc<=60)return['DMA çalışması tamamlanmalı','Scope 1–2 karbon hesaplamaları yapılmalı','ESG KPI seti oluşturulmalı'];
-  if(sc<=80)return['ESRS uyum matrisi tamamlanmalı','Denetim dosyası ve kanıt klasörleri hazırlanmalı','Bağımsız güvence süreci planlanmalı'];
-  if(sc<=90)return['Scope 3 kapsamı genişletilmeli','Dijital ESG platformuna geçilmeli','AB Taksonomisi uyumu değerlendirilmeli'];
-  return['Bilimsel temelli hedefler (SBTi) doğrulanmalı','Güvence seviyesi artırılmalı','Sektör liderliği konumu raporlanmalı'];
-}
-
-// ── TÜM CEVAPLARI da payload'a ekle ──
-function buildPayload(){
-  const tlv=parseInt(ST.firm.targetLv||25);
-  const sc=calcScore(tlv);
-  const st=getStatus(sc);
-  const secs=secScores(tlv);
-
-  // Her sorunun id, metin, seçilen cevap ve puan bilgisini topla
-  const cevaplar = QS.filter(q=>q.lv<=tlv).map(q=>{
-    const idx=ST.ans[q.id];
-    return{
-      soru_id: q.id,
-      bolum: q.sec,
-      soru: q.txt,
-      cevap: idx!==undefined ? q.opts[idx] : 'Cevaplanmadı',
-      puan: idx!==undefined ? q.sc[idx] : 0,
-      max_puan: 4
-    };
-  });
-
-  return{
-    timestamp: new Date().toISOString(),
-    firma_adi: ST.firm.name||'',
-    sektor: ST.firm.sector||'',
-    calisan_sayisi: ST.firm.size||'',
-    sehir: ST.firm.city||'',
-    ilgili_kisi: ST.firm.contact||'',
-    email: ST.firm.email||'',
-    degerlendirme_seviyesi: 'SHE-'+tlv,
-    toplam_puan: sc,
-    olgunluk_durumu: st.lbl,
-    onerilen_modul: st.mod,
-    bolum_puanlari: Object.entries(secs).map(([k,v])=>({bolum:k,puan:Math.round((v.t/v.m)*100)})),
-    aksiyon_onerileri: recos(sc),
-    cevaplar: cevaplar   // ← tüm soru-cevap detayı
-  };
-}
-
-// ── OTOMATİK WEBHOOK GÖNDERİMİ ──
-async function sendToMake(payload){
-  try{
-    await fetch(MAKE_WEBHOOK,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(payload),
-      mode:'no-cors'   // Make.com CORS başlığı dönmez, bu normal
-    });
-    console.log('[SHE] Make.com webhook tetiklendi ✓');
-  }catch(e){
-    console.warn('[SHE] Webhook hatası:',e);
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHE – Sürdürülebilirlik Hazırlık Sistemi</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --ink: #0f1117;
+    --paper: #f5f0e8;
+    --sage: #4a7c59;
+    --sage-light: #7aab8a;
+    --sage-pale: #e8f0ea;
+    --amber: #c8832a;
+    --amber-pale: #fdf3e3;
+    --rust: #b84c2b;
+    --mist: #dde4d8;
+    --lead: #4a5568;
+    --border: #c8c2b4;
+    --white: #ffffff;
+    --shadow: 0 4px 24px rgba(15,17,23,0.08);
+    --shadow-lg: 0 12px 48px rgba(15,17,23,0.14);
   }
-}
 
-function render(){
-  const mc=document.getElementById('main-content');
-  if(ST.phase==='intake')mc.innerHTML=renderIntake();
-  else if(ST.phase==='quiz')mc.innerHTML=renderQuiz();
-  else mc.innerHTML=renderResult();
-  attach();
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-function renderIntake(){
-  return `
-  <div class="hero">
-    <h1>ESG Olgunluk<br>Değerlendirmesi</h1>
-    <p>Firmanızın sürdürülebilirlik hazırlık düzeyini ölçün. Puan, öneri ve danışmanlık yol haritanız 10 dakikada hazır.</p>
-    <div class="level-cards">
-      <div class="level-card"><div class="lc-tag">SHE-25</div><div class="lc-name">ESG Check-Up</div><div class="lc-desc">25 soru · ~10 dk</div></div>
-      <div class="level-card"><div class="lc-tag">SHE-50</div><div class="lc-name">Readiness Assessment</div><div class="lc-desc">50 soru · ~20 dk</div></div>
-      <div class="level-card"><div class="lc-tag">SHE-100</div><div class="lc-name">ESRS Readiness Audit</div><div class="lc-desc">100 soru · ~40 dk</div></div>
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background-color: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  .site-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--sage);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--paper);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .logo span {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    color: var(--sage-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .level-tabs {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .level-tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 6px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: rgba(245,240,232,0.5);
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .level-tab.active {
+    background: var(--sage);
+    color: var(--white);
+  }
+  .level-tab:hover:not(.active) { color: var(--paper); }
+  .level-tab.locked { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── HERO ────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--ink) 0%, #1e2d24 60%, #2a3d30 100%);
+    color: var(--paper);
+    padding: 64px 32px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(74,124,89,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    border: 1px solid var(--sage);
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+  }
+  .hero h1 em { font-style: italic; color: var(--sage-light); }
+  .hero p {
+    font-size: 16px;
+    color: rgba(245,240,232,0.7);
+    max-width: 540px;
+    margin: 0 auto 32px;
+  }
+  .hero-levels {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-level {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 14px 24px;
+    text-align: left;
+    min-width: 180px;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .hero-level:hover { background: rgba(74,124,89,0.2); border-color: var(--sage); transform: translateY(-2px); }
+  .hero-level .lvl-code { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--sage-light); }
+  .hero-level .lvl-name { font-size: 13px; color: rgba(245,240,232,0.6); margin-top: 2px; }
+  .hero-level .lvl-q { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--sage); margin-top: 8px; }
+
+  /* ── MAIN LAYOUT ─────────────────────────── */
+  .main-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── COMPANY INFO ────────────────────────── */
+  .company-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+  .company-card h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin-bottom: 24px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .company-card h2::before {
+    content: '01';
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--sage);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media(max-width:600px){ .field-grid { grid-template-columns: 1fr; } }
+  .field-grid .full { grid-column: 1 / -1; }
+  .form-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--lead);
+    margin-bottom: 6px;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    background: var(--paper);
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--sage);
+    box-shadow: 0 0 0 3px rgba(74,124,89,0.12);
+    background: var(--white);
+  }
+  .form-field textarea { resize: vertical; min-height: 80px; }
+
+  /* ── PROGRESS ────────────────────────────── */
+  .progress-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 72px;
+    z-index: 50;
+  }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .progress-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--lead);
+  }
+  .progress-score {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    color: var(--sage);
+    line-height: 1;
+  }
+  .progress-score span { font-size: 14px; color: var(--lead); font-family: 'Instrument Sans', sans-serif; }
+  .progress-bar-bg {
+    height: 8px;
+    background: var(--mist);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage) 0%, var(--sage-light) 100%);
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+  .progress-sections {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .prog-sec {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--mist);
+    color: var(--lead);
+    transition: all 0.2s;
+  }
+  .prog-sec.done { background: var(--sage-pale); color: var(--sage); }
+
+  /* ── SECTION BLOCKS ──────────────────────── */
+  .section-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .section-block:hover { box-shadow: var(--shadow-lg); }
+  .section-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--sage-light);
+    min-width: 28px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    flex: 1;
+  }
+  .section-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(245,240,232,0.4);
+  }
+  .section-chevron {
+    font-size: 16px;
+    transition: transform 0.3s;
+    color: var(--sage-light);
+  }
+  .section-header.collapsed .section-chevron { transform: rotate(-90deg); }
+
+  .section-body {
+    padding: 24px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .section-body.hidden { display: none; }
+
+  /* ── QUESTION ────────────────────────────── */
+  .question {
+    border-left: 3px solid var(--mist);
+    padding-left: 16px;
+    transition: border-color 0.2s;
+  }
+  .question.answered { border-color: var(--sage); }
+  .question-head {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--sage);
+    background: var(--sage-pale);
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-top: 2px;
+    white-space: nowrap;
+    min-width: 46px;
+    text-align: center;
+  }
+  .q-text {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-left: 0;
+  }
+  .opt-btn {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    padding: 7px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    background: var(--paper);
+    color: var(--lead);
+    cursor: pointer;
+    transition: all 0.18s;
+    outline: none;
+  }
+  .opt-btn:hover { border-color: var(--sage); color: var(--sage); background: var(--sage-pale); }
+  .opt-btn.selected {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: var(--white);
+    font-weight: 600;
+  }
+  .opt-btn.selected-amber {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--white);
+    font-weight: 600;
+  }
+  .opt-btn.selected-no {
+    background: #c0392b;
+    border-color: #c0392b;
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* ── LEVEL BADGE ─────────────────────────── */
+  .level-gate {
+    background: linear-gradient(135deg, var(--amber-pale), #fff8ef);
+    border: 1.5px dashed var(--amber);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 12px 0;
+    display: none;
+  }
+  .level-gate.visible { display: block; }
+  .level-gate p {
+    font-size: 14px;
+    color: var(--amber);
+    font-weight: 500;
+  }
+  .level-gate p strong { font-family: 'Fraunces', serif; font-size: 16px; }
+
+  /* ── RESULT SECTION ──────────────────────── */
+  .result-section {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    margin-top: 32px;
+  }
+  .result-section.visible { display: block; }
+  .result-header {
+    background: linear-gradient(135deg, var(--sage) 0%, #2d5c3f 100%);
+    color: white;
+    padding: 40px 40px 32px;
+  }
+  .result-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+  }
+  .result-score-big {
+    font-family: 'Fraunces', serif;
+    font-size: 80px;
+    line-height: 1;
+    color: white;
+    margin: 16px 0 8px;
+  }
+  .result-score-big span { font-size: 28px; opacity: 0.7; }
+  .result-status {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 24px;
+    padding: 6px 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+  }
+  .result-body { padding: 40px; }
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  @media(max-width:600px){ .result-grid { grid-template-columns: 1fr; } }
+  .result-card {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .result-card h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--lead);
+    margin-bottom: 8px;
+  }
+  .result-card p { font-size: 15px; color: var(--ink); }
+  .result-card ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .result-card ul li {
+    background: var(--sage-pale);
+    color: var(--sage);
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  .section-scores { margin-bottom: 32px; }
+  .section-scores h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .sec-score-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--mist);
+  }
+  .sec-score-label { font-size: 13px; color: var(--lead); flex: 1; min-width: 160px; }
+  .sec-score-bar-bg { flex: 2; height: 6px; background: var(--mist); border-radius: 3px; overflow: hidden; }
+  .sec-score-bar { height: 100%; background: var(--sage); border-radius: 3px; transition: width 0.6s; }
+  .sec-score-val { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--sage); min-width: 44px; text-align: right; }
+
+  /* ── ACTIONS ─────────────────────────────── */
+  .actions-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--mist);
+  }
+  .btn {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.2px;
+  }
+  .btn-primary { background: var(--sage); color: white; }
+  .btn-primary:hover { background: #3d6a4a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(74,124,89,0.3); }
+  .btn-secondary { background: var(--ink); color: var(--paper); }
+  .btn-secondary:hover { background: #1e2d2a; }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--ink); background: var(--mist); }
+  .btn-amber { background: var(--amber); color: white; }
+  .btn-amber:hover { background: #a8691e; }
+
+  /* ── STATUS TOAST ─────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    z-index: 999;
+    max-width: 320px;
+    border-left: 3px solid var(--sage);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.error { border-left-color: var(--rust); }
+
+  /* ── SUBMIT ZONE ──────────────────────────── */
+  .submit-zone {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .submit-zone h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .submit-zone p { color: var(--lead); font-size: 14px; margin-bottom: 20px; }
+  .submit-zone .btn { font-size: 16px; padding: 14px 40px; }
+
+  /* ── SPINNER ──────────────────────────────── */
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── FORM LEVEL VISIBILITY ────────────────── */
+  [data-level="50"], [data-level="100"] { display: none; }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer {
+    background: var(--ink);
+    color: rgba(245,240,232,0.4);
+    text-align: center;
+    padding: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">SHE <span>Sustainability Hazırlık Sistemi</span></div>
+    <div class="level-tabs">
+      <button class="level-tab active" onclick="setLevel(25)" id="tab-25">SHE-25</button>
+      <button class="level-tab locked" onclick="setLevel(50)" id="tab-50">SHE-50</button>
+      <button class="level-tab locked" onclick="setLevel(100)" id="tab-100">SHE-100</button>
     </div>
   </div>
-  <div class="container">
-    <div class="card">
-      <div class="card-body">
-        <div class="card-title">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
-          Firma bilgileri
-        </div>
-        <div class="field-grid">
-          <div class="field"><label>Firma adı *</label><input type="text" id="f-name" placeholder="ABC Sanayi A.Ş." value="${ST.firm.name||''}"><span class="err" id="e-name">Bu alan zorunludur.</span></div>
-          <div class="field"><label>Sektör *</label><select id="f-sector"><option value="">Seçiniz...</option>${SECTORS.map(s=>`<option value="${s}" ${ST.firm.sector===s?'selected':''}>${s}</option>`).join('')}</select><span class="err" id="e-sector">Lütfen sektör seçiniz.</span></div>
-        </div>
-        <div class="field-grid">
-          <div class="field"><label>Çalışan sayısı</label><select id="f-size"><option value="">Seçiniz...</option>${SIZES.map(s=>`<option value="${s}" ${ST.firm.size===s?'selected':''}>${s}</option>`).join('')}</select></div>
-          <div class="field"><label>İl</label><input type="text" id="f-city" placeholder="İstanbul" value="${ST.firm.city||''}"></div>
-        </div>
-        <div class="field-grid full"><div class="field"><label>İletişim kişisi</label><input type="text" id="f-contact" placeholder="Ad Soyad / Unvan" value="${ST.firm.contact||''}"></div></div>
-        <div class="field-grid full"><div class="field"><label>E-posta adresi *</label><input type="email" id="f-email" placeholder="info@firma.com" value="${ST.firm.email||''}"><span class="err" id="e-email">Geçerli bir e-posta giriniz.</span></div></div>
-        <div class="field-grid full" style="margin-bottom:0"><div class="field"><label>Değerlendirme seviyesi</label><select id="f-level"><option value="25" ${!ST.firm.targetLv||ST.firm.targetLv==25?'selected':''}>SHE-25 — ESG Check-Up (25 soru, ~10 dk)</option><option value="50" ${ST.firm.targetLv==50?'selected':''}>SHE-50 — Readiness Assessment (50 soru, ~20 dk)</option><option value="100" ${ST.firm.targetLv==100?'selected':''}>SHE-100 — ESRS Readiness Audit (100 soru, ~40 dk)</option></select></div></div>
-      </div>
-      <div style="padding:1rem 1.5rem 1.5rem;display:flex;justify-content:flex-end">
-        <button class="btn btn-primary" id="btn-start" style="padding:12px 32px;font-size:15px">Değerlendirmeyi Başlat →</button>
-      </div>
-    </div>
-  </div>`;
-}
+</header>
 
-function renderQuiz(){
-  const tlv=parseInt(ST.firm.targetLv||25);
-  const qs=qsFor(ST.lv);
-  const q=qs[ST.qi];
-  const answeredTotal=QS.filter(x=>x.lv<=tlv&&ST.ans[x.id]!==undefined).length;
-  const totalQs=QS.filter(x=>x.lv<=tlv).length;
-  const progress=Math.round((answeredTotal/totalQs)*100);
-  const overallIdx=QS.indexOf(q)+1;
-  const lvls=[25,50,100].filter(l=>l<=tlv);
-  const lvlName={25:'SHE-25 · ESG Check-Up',50:'SHE-50 · Readiness Assessment',100:'SHE-100 · ESRS Readiness Audit'};
-  const tabs=lvls.map(l=>`<div class="ltab ${l===ST.lv?'active':l<ST.lv?'done':''}">${l===25?'SHE-25':l===50?'SHE-50':'SHE-100'}</div>`).join('');
-  let banner='';
-  if(ST.lv===50&&ST.qi===0)banner=`<div class="unlock-banner"><div class="unlock-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div><div class="unlock-text"><strong>SHE-50 açıldı!</strong> ESG Check-Up tamamlandı. Danışmanlık ön analizi başlıyor.</div></div>`;
-  if(ST.lv===100&&ST.qi===0)banner=`<div class="unlock-banner"><div class="unlock-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div><div class="unlock-text"><strong>SHE-100 açıldı!</strong> Readiness Assessment tamamlandı. ESRS Readiness Audit başlıyor.</div></div>`;
-  const isLastInLv=ST.qi===qs.length-1;
-  const isLastLv=ST.lv===tlv;
-  const nextLbl=isLastInLv&&isLastLv?'Sonuçları Gör ✓':isLastInLv?'Sonraki Bölüm →':'Sonraki';
-  return`
-  <div class="progress-wrap">
-    <div class="progress-meta"><span class="progress-level">${lvlName[ST.lv]}</span><span class="progress-counter">${overallIdx} / ${totalQs}</span></div>
-    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${progress}%"></div></div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">ESG · ESRS · TSRS · Sürdürülebilirlik</div>
+  <h1>Şirketinizin<br><em>Sürdürülebilirlik</em> Olgunluğunu Ölçün</h1>
+  <p>Üç katmanlı değerlendirme sistemi ile ESG uyum durumunuzu analiz edin, sonuçlarınızı anında alın.</p>
+  <div class="hero-levels">
+    <div class="hero-level" onclick="scrollToForm(); setLevel(25)">
+      <div class="lvl-code">SHE-25</div>
+      <div class="lvl-name">ESG Check-Up</div>
+      <div class="lvl-q">25 Soru · 10 dk</div>
+    </div>
+    <div class="hero-level" onclick="scrollToForm(); setLevel(50)">
+      <div class="lvl-code">SHE-50</div>
+      <div class="lvl-name">ESG Readiness</div>
+      <div class="lvl-q">50 Soru · 20 dk</div>
+    </div>
+    <div class="hero-level" onclick="scrollToForm(); setLevel(100)">
+      <div class="lvl-code">SHE-100</div>
+      <div class="lvl-name">ESRS Audit</div>
+      <div class="lvl-q">100 Soru · 40 dk</div>
+    </div>
   </div>
-  <div class="level-tabs">${tabs}</div>
-  <div class="container" style="padding-top:1.5rem">
-    ${banner}
-    <div class="firm-chip"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>${ST.firm.name||'Firma'} · ${ST.firm.sector||''}</div>
-    <div class="q-section">${q.sec}</div>
-    <div class="q-text">${q.txt}</div>
-    <div class="opts">${q.opts.map((o,i)=>`<button class="opt${ST.ans[q.id]===i?' sel':''}" data-idx="${i}"><span class="opt-dot"></span>${o}</button>`).join('')}</div>
-    <div class="nav-row">
-      ${ST.qi>0||ST.lv>25?`<button class="btn btn-secondary" id="btn-back">← Geri</button>`:''}
-      <button class="btn btn-primary" id="btn-next" ${ST.ans[q.id]===undefined?'disabled':''}>${nextLbl}</button>
-    </div>
-  </div>`;
-}
+</div>
 
-function renderResult(){
-  const tlv=parseInt(ST.firm.targetLv||25);
-  const sc=calcScore(tlv);
-  const st=getStatus(sc);
-  const secs=secScores(tlv);
-  const secKeys=Object.keys(secs).slice(0,6);
-  const firm=ST.firm;
-  const rs=recos(sc);
-  return`
-  <div class="container">
-    <div class="firm-chip" style="margin-top:1rem">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      ${firm.name||'Firma'} · ${firm.sector||''} ${firm.size?'· '+firm.size:''}
+<!-- MAIN -->
+<div class="main-wrap" id="formTop">
+
+  <!-- COMPANY INFO -->
+  <div class="company-card">
+    <h2>Firma Bilgileri</h2>
+    <div class="field-grid">
+      <div class="form-field full">
+        <label>Şirket Adı *</label>
+        <input type="text" id="firmAdi" placeholder="Örn: ABC Tekstil A.Ş." required>
+      </div>
+      <div class="form-field">
+        <label>Sektör *</label>
+        <select id="sektor">
+          <option value="">Sektör Seçin...</option>
+          <option>Tekstil & Hazır Giyim</option>
+          <option>Gıda & İçecek</option>
+          <option>Metal & Makine</option>
+          <option>Kimya & Plastik</option>
+          <option>İnşaat & Gayrimenkul</option>
+          <option>Enerji & Utilities</option>
+          <option>Lojistik & Taşımacılık</option>
+          <option>Finans & Bankacılık</option>
+          <option>Perakende & E-ticaret</option>
+          <option>Teknoloji & Yazılım</option>
+          <option>Sağlık & İlaç</option>
+          <option>Turizm & Otelcilik</option>
+          <option>Tarım & Hayvancılık</option>
+          <option>Diğer</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Şirket Büyüklüğü</label>
+        <select id="buyukluk">
+          <option value="">Seçin...</option>
+          <option>Mikro (&lt;10 çalışan)</option>
+          <option>Küçük (10-49 çalışan)</option>
+          <option>Orta (50-249 çalışan)</option>
+          <option>Büyük (250+ çalışan)</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>İletişim Adı</label>
+        <input type="text" id="kontak" placeholder="Ad Soyad">
+      </div>
+      <div class="form-field">
+        <label>E-posta *</label>
+        <input type="email" id="email" placeholder="firma@sirket.com" required>
+      </div>
+      <div class="form-field">
+        <label>Telefon</label>
+        <input type="tel" id="telefon" placeholder="+90 5xx xxx xx xx">
+      </div>
+      <div class="form-field full">
+        <label>Değerlendirme Notu (İsteğe bağlı)</label>
+        <textarea id="not" placeholder="Firmanız hakkında ek bilgi..."></textarea>
+      </div>
     </div>
-    <div class="card">
-      <div class="result-header">
-        <div class="score-row">
-          <div class="score-ring" style="color:${st.col}">
-            <span class="score-num" style="color:${st.col}">${sc}</span>
-            <span class="score-lbl" style="color:${st.col}">PUAN</span>
-          </div>
-          <div>
-            <div class="result-status" style="color:${st.col}">${st.lbl}</div>
-            <div class="result-desc">${st.desc}</div>
-            <div class="result-module">Önerilen eğitim: <strong>${st.mod}</strong></div>
-          </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-header">
+      <div class="progress-title">İlerleme</div>
+      <div class="progress-score" id="liveScore">0 <span>/ 100</span></div>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-sections" id="progSecs"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SHE-25 QUESTIONS -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- BÖLÜM A: REGÜLASYON FARKINDALIĞI -->
+  <div class="section-block" data-section="A">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">A</span>
+      <span class="section-title">Regülasyon Farkındalığı</span>
+      <span class="section-count">S1 – S4</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S1">
+        <div class="question-head"><span class="q-num">S1</span><span class="q-text">TSRS (Türkiye Sürdürülebilirlik Raporlama Standartları) kavramını biliyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S1')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S1')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S1')">Hayır</button>
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-title" style="margin-bottom:.75rem">Bölüm skorları</div>
-        <div class="dim-grid">${secKeys.map(s=>{const d=secs[s];const p=Math.round((d.t/d.m)*100);const c=p>=70?'#1D7A56':p>=40?'#C07818':'#D94040';return`<div class="dim-item"><div class="dim-name">${s}</div><div class="dim-bar-bg"><div class="dim-bar-fill" style="width:${p}%;background:${c}"></div></div><div class="dim-pct" style="color:${c}">${p}%</div></div>`;}).join('')}</div>
+      <div class="question" data-q="S2">
+        <div class="question-head"><span class="q-num">S2</span><span class="q-text">ESRS (European Sustainability Reporting Standards) kavramını biliyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S2')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S2')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S2')">Hayır</button>
+        </div>
       </div>
-      <div class="send-section">
-        <div class="card-title" style="margin-bottom:.5rem">Öncelikli aksiyon alanları</div>
-        <div class="reco-list">${rs.map(r=>`<div class="reco-item"><div class="reco-dot"></div><span>${r}</span></div>`).join('')}</div>
+      <div class="question" data-q="S3">
+        <div class="question-head"><span class="q-num">S3</span><span class="q-text">Karbon sınır düzenleme mekanizması (CBAM) şirketinizi etkileyebilir mi?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S3')">Evet</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S3')">Hayır</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S3')">Emin değilim</button>
+        </div>
       </div>
-      <div class="send-section">
-        <div class="send-title">Veriler kaydediliyor…</div>
-        <div class="status-msg loading" id="auto-status" style="display:block">Sonuçlarınız sisteme iletiliyor, lütfen bekleyin…</div>
-      </div>
-      <div class="send-section">
-        <div class="send-title">Sonuçları e-posta ile gönder</div>
-        <div class="send-subtitle">Kişiselleştirilmiş rapor <strong>${firm.email||'kayıtlı adresinize'}</strong> gönderilecek.</div>
-        <div class="send-row"><input type="email" id="send-email" placeholder="E-posta adresi" value="${firm.email||''}"><button class="btn btn-primary" id="btn-send-email">Gönder</button></div>
-        <div class="status-msg" id="email-status"></div>
-      </div>
-      <div class="cta-grid">
-        <button class="btn-cta" id="btn-new">Yeni değerlendirme</button>
-        <button class="btn-cta primary" id="btn-consult">Danışmanlık talebi oluştur</button>
+      <div class="question" data-q="S4">
+        <div class="question-head"><span class="q-num">S4</span><span class="q-text">Firmanızın sürdürülebilirlik raporlaması kapsamında olup olmadığını biliyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S4')">Evet</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S4')">Hayır</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S4')">Emin değilim</button>
+        </div>
       </div>
     </div>
-  </div>`;
+  </div>
+
+  <!-- BÖLÜM B: YÖNETİM -->
+  <div class="section-block" data-section="B">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">B</span>
+      <span class="section-title">Yönetim</span>
+      <span class="section-count">S5 – S7</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S5">
+        <div class="question-head"><span class="q-num">S5</span><span class="q-text">Yönetim kurulu sürdürülebilirliği gündemine alıyor mu?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S5')">Düzenli</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S5')">Ara sıra</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S5')">Hiç</button>
+        </div>
+      </div>
+      <div class="question" data-q="S6">
+        <div class="question-head"><span class="q-num">S6</span><span class="q-text">Sürdürülebilirlikten sorumlu kişi var mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S6')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S6')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S6')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S7">
+        <div class="question-head"><span class="q-num">S7</span><span class="q-text">Sürdürülebilirlik komitesi var mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S7')">Var</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S7')">Kuruluyor</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S7')">Yok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM C: DMA ve IRO -->
+  <div class="section-block" data-section="C">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">C</span>
+      <span class="section-title">DMA ve IRO</span>
+      <span class="section-count">S8 – S12</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S8">
+        <div class="question-head"><span class="q-num">S8</span><span class="q-text">Çifte Önemlilik Analizi (DMA) kavramını biliyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S8')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S8')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S8')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S9">
+        <div class="question-head"><span class="q-num">S9</span><span class="q-text">IRO (Impact, Risk, Opportunity) kavramını biliyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S9')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S9')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S9')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S10">
+        <div class="question-head"><span class="q-num">S10</span><span class="q-text">Paydaş analizi yaptınız mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S10')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S10')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S10')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S11">
+        <div class="question-head"><span class="q-num">S11</span><span class="q-text">DMA çalışması yaptınız mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S11')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S11')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S11')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S12">
+        <div class="question-head"><span class="q-num">S12</span><span class="q-text">IRO çalışması yaptınız mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S12')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S12')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S12')">Hayır</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM D: ESG VERİSİ -->
+  <div class="section-block" data-section="D">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">D</span>
+      <span class="section-title">ESG Verisi Takibi</span>
+      <span class="section-count">S13 – S16</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S13">
+        <div class="question-head"><span class="q-num">S13</span><span class="q-text">Enerji tüketimleri düzenli olarak takip ediliyor mu?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S13')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S13')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S13')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S14">
+        <div class="question-head"><span class="q-num">S14</span><span class="q-text">Su tüketimleri düzenli olarak takip ediliyor mu?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S14')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S14')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S14')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S15">
+        <div class="question-head"><span class="q-num">S15</span><span class="q-text">Atık verileri düzenli olarak takip ediliyor mu?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S15')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S15')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S15')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S16">
+        <div class="question-head"><span class="q-num">S16</span><span class="q-text">İK (insan kaynakları) verileri düzenli olarak takip ediliyor mu?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S16')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S16')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S16')">Hayır</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM E: KARBON -->
+  <div class="section-block" data-section="E">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">E</span>
+      <span class="section-title">Karbon Yönetimi</span>
+      <span class="section-count">S17 – S20</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S17">
+        <div class="question-head"><span class="q-num">S17</span><span class="q-text">Scope 1 emisyonlarını hesaplıyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S17')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S17')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S17')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S18">
+        <div class="question-head"><span class="q-num">S18</span><span class="q-text">Scope 2 emisyonlarını hesaplıyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S18')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S18')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S18')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S19">
+        <div class="question-head"><span class="q-num">S19</span><span class="q-text">Scope 3 emisyonlarını hesaplıyor musunuz?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S19')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S19')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S19')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S20">
+        <div class="question-head"><span class="q-num">S20</span><span class="q-text">Karbon ayak izi raporu hazırladınız mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S20')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S20')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S20')">Hayır</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM F: RAPORLAMA -->
+  <div class="section-block" data-section="F">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">F</span>
+      <span class="section-title">Raporlama</span>
+      <span class="section-count">S21 – S23</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S21">
+        <div class="question-head"><span class="q-num">S21</span><span class="q-text">Sürdürülebilirlik raporu yayınladınız mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S21')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S21')">Hazırlık aşamasında</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S21')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S22">
+        <div class="question-head"><span class="q-num">S22</span><span class="q-text">Hangi standartla raporladınız?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S22')">GRI</button>
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S22')">TSRS</button>
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S22')">ESRS</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S22')">Diğer</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S22')">Raporlamıyoruz</button>
+        </div>
+      </div>
+      <div class="question" data-q="S23">
+        <div class="question-head"><span class="q-num">S23</span><span class="q-text">Bağımsız doğrulama yaptırdınız mı?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S23')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S23')">Planlıyoruz</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S23')">Hayır</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM G: TALEP -->
+  <div class="section-block" data-section="G">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">G</span>
+      <span class="section-title">Pazar Talebi</span>
+      <span class="section-count">S24 – S25</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S24">
+        <div class="question-head"><span class="q-num">S24</span><span class="q-text">Müşterileriniz ESG verisi talep ediyor mu?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S24')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S24')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S24')">Hayır</button>
+        </div>
+      </div>
+      <div class="question" data-q="S25">
+        <div class="question-head"><span class="q-num">S25</span><span class="q-text">Bankalar / finans kuruluşları ESG verisi talep ediyor mu?</span></div>
+        <div class="options">
+          <button class="opt-btn" data-val="4" onclick="selectOpt(this,'S25')">Evet</button>
+          <button class="opt-btn" data-val="2" onclick="selectOpt(this,'S25')">Kısmen</button>
+          <button class="opt-btn" data-val="0" onclick="selectOpt(this,'S25')">Hayır</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════ SHE-50 ═════ -->
+  <div data-level="50">
+
+  <div class="level-gate" id="gate-50">
+    <p><strong>SHE-50 – ESG Readiness Assessment</strong><br>Aşağıdaki 25 soru daha ayrıntılı hazırlık durumunuzu ölçer.</p>
+  </div>
+
+  <!-- BÖLÜM H: ESRS 1 ORG SINIRI -->
+  <div class="section-block" data-section="H">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">H</span>
+      <span class="section-title">Organizasyonel Sınır (ESRS 1)</span>
+      <span class="section-count">S26 – S30</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S26"><div class="question-head"><span class="q-num">S26</span><span class="q-text">Raporlama kapsamına alınan tesisler tanımlı mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S26')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S26')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S26')">Hayır</button></div></div>
+      <div class="question" data-q="S27"><div class="question-head"><span class="q-num">S27</span><span class="q-text">Hariç bırakılan tesisler gerekçelendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S27')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S27')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S27')">Hayır</button></div></div>
+      <div class="question" data-q="S28"><div class="question-head"><span class="q-num">S28</span><span class="q-text">Operasyonel kontrol yaklaşımı belirlenmiş mi?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S28')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S28')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S28')">Hayır</button></div></div>
+      <div class="question" data-q="S29"><div class="question-head"><span class="q-num">S29</span><span class="q-text">Finansal kontrol yaklaşımı belirlenmiş mi?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S29')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S29')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S29')">Hayır</button></div></div>
+      <div class="question" data-q="S30"><div class="question-head"><span class="q-num">S30</span><span class="q-text">Raporlama sınırları dokümante edilmiş mi?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S30')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S30')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S30')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM I: DEĞER ZİNCİRİ -->
+  <div class="section-block" data-section="I">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">I</span>
+      <span class="section-title">Değer Zinciri</span>
+      <span class="section-count">S31 – S35</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S31"><div class="question-head"><span class="q-num">S31</span><span class="q-text">Tedarikçiler ESG açısından sınıflandırıldı mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S31')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S31')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S31')">Hayır</button></div></div>
+      <div class="question" data-q="S32"><div class="question-head"><span class="q-num">S32</span><span class="q-text">Kritik tedarikçiler tanımlandı mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S32')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S32')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S32')">Hayır</button></div></div>
+      <div class="question" data-q="S33"><div class="question-head"><span class="q-num">S33</span><span class="q-text">AB müşterilerinden ESG talebi geliyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S33')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S33')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S33')">Hayır</button></div></div>
+      <div class="question" data-q="S34"><div class="question-head"><span class="q-num">S34</span><span class="q-text">Değer zinciri riskleri değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S34')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S34')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S34')">Hayır</button></div></div>
+      <div class="question" data-q="S35"><div class="question-head"><span class="q-num">S35</span><span class="q-text">Scope 3 stratejisi mevcut mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S35')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S35')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S35')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM J: GOVERNANCE -->
+  <div class="section-block" data-section="J">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">J</span>
+      <span class="section-title">Yönetişim (ESRS 2)</span>
+      <span class="section-count">S36 – S40</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S36"><div class="question-head"><span class="q-num">S36</span><span class="q-text">Yönetim kurulunda ESG sorumluluğu tanımlı mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S36')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S36')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S36')">Hayır</button></div></div>
+      <div class="question" data-q="S37"><div class="question-head"><span class="q-num">S37</span><span class="q-text">ESG performansı üst yönetime raporlanıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S37')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S37')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S37')">Hayır</button></div></div>
+      <div class="question" data-q="S38"><div class="question-head"><span class="q-num">S38</span><span class="q-text">Yönetim ESG hedeflerini izliyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S38')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S38')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S38')">Hayır</button></div></div>
+      <div class="question" data-q="S39"><div class="question-head"><span class="q-num">S39</span><span class="q-text">ESG KPI seti var mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S39')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S39')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S39')">Hayır</button></div></div>
+      <div class="question" data-q="S40"><div class="question-head"><span class="q-num">S40</span><span class="q-text">ESG performans raporu hazırlanıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S40')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S40')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S40')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM K: VERİ GÜVENİLİRLİĞİ -->
+  <div class="section-block" data-section="K">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">K</span>
+      <span class="section-title">Veri Güvenilirliği</span>
+      <span class="section-count">S41 – S45</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S41"><div class="question-head"><span class="q-num">S41</span><span class="q-text">Veri sahipleri tanımlı mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S41')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S41')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S41')">Hayır</button></div></div>
+      <div class="question" data-q="S42"><div class="question-head"><span class="q-num">S42</span><span class="q-text">Kanıt dokümanları tutuluyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S42')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S42')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S42')">Hayır</button></div></div>
+      <div class="question" data-q="S43"><div class="question-head"><span class="q-num">S43</span><span class="q-text">Veri doğrulama süreci var mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S43')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S43')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S43')">Hayır</button></div></div>
+      <div class="question" data-q="S44"><div class="question-head"><span class="q-num">S44</span><span class="q-text">Veri eksiklikleri kayıt altına alınıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S44')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S44')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S44')">Hayır</button></div></div>
+      <div class="question" data-q="S45"><div class="question-head"><span class="q-num">S45</span><span class="q-text">Denetim izi oluşturulabiliyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S45')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S45')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S45')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM L: HEDEFLER -->
+  <div class="section-block" data-section="L">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">L</span>
+      <span class="section-title">Hedefler ve İzleme</span>
+      <span class="section-count">S46 – S50</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S46"><div class="question-head"><span class="q-num">S46</span><span class="q-text">Karbon azaltım hedefi var mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S46')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S46')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S46')">Hayır</button></div></div>
+      <div class="question" data-q="S47"><div class="question-head"><span class="q-num">S47</span><span class="q-text">Enerji verimliliği hedefi var mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S47')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S47')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S47')">Hayır</button></div></div>
+      <div class="question" data-q="S48"><div class="question-head"><span class="q-num">S48</span><span class="q-text">İSG (İş Sağlığı ve Güvenliği) hedefleri var mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S48')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S48')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S48')">Hayır</button></div></div>
+      <div class="question" data-q="S49"><div class="question-head"><span class="q-num">S49</span><span class="q-text">Sosyal hedefler (çalışan, topluluk, cinsiyet eşitliği vb.) var mı?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S49')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S49')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S49')">Hayır</button></div></div>
+      <div class="question" data-q="S50"><div class="question-head"><span class="q-num">S50</span><span class="q-text">Bu hedefler düzenli olarak ölçülüyor mu?</span></div><div class="options"><button class="opt-btn" data-val="2" onclick="selectOpt(this,'S50')">Evet</button><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S50')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S50')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  </div><!-- /data-level=50 -->
+
+  <!-- ═════ SHE-100 ═════ -->
+  <div data-level="100">
+
+  <div class="level-gate" id="gate-100">
+    <p><strong>SHE-100 – ESRS Readiness Audit</strong><br>Son 50 soru ESRS uyum denetimi için tasarlanmıştır.</p>
+  </div>
+
+  <!-- BÖLÜM M: DMA DETAY -->
+  <div class="section-block" data-section="M">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">M</span>
+      <span class="section-title">DMA Konu Değerlendirmeleri</span>
+      <span class="section-count">S51 – S60</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S51"><div class="question-head"><span class="q-num">S51</span><span class="q-text">E1 İklim Değişikliği – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S51')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S51')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S51')">Hayır</button></div></div>
+      <div class="question" data-q="S52"><div class="question-head"><span class="q-num">S52</span><span class="q-text">E2 Kirlilik – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S52')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S52')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S52')">Hayır</button></div></div>
+      <div class="question" data-q="S53"><div class="question-head"><span class="q-num">S53</span><span class="q-text">E3 Su ve Deniz Kaynakları – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S53')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S53')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S53')">Hayır</button></div></div>
+      <div class="question" data-q="S54"><div class="question-head"><span class="q-num">S54</span><span class="q-text">E4 Biyoçeşitlilik – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S54')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S54')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S54')">Hayır</button></div></div>
+      <div class="question" data-q="S55"><div class="question-head"><span class="q-num">S55</span><span class="q-text">E5 Döngüsel Ekonomi – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S55')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S55')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S55')">Hayır</button></div></div>
+      <div class="question" data-q="S56"><div class="question-head"><span class="q-num">S56</span><span class="q-text">S1 Kendi Çalışanlar – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S56')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S56')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S56')">Hayır</button></div></div>
+      <div class="question" data-q="S57"><div class="question-head"><span class="q-num">S57</span><span class="q-text">S2 Değer Zinciri Çalışanları – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S57')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S57')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S57')">Hayır</button></div></div>
+      <div class="question" data-q="S58"><div class="question-head"><span class="q-num">S58</span><span class="q-text">S3 Etkilenen Topluluklar – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S58')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S58')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S58')">Hayır</button></div></div>
+      <div class="question" data-q="S59"><div class="question-head"><span class="q-num">S59</span><span class="q-text">S4 Tüketiciler ve Son Kullanıcılar – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S59')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S59')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S59')">Hayır</button></div></div>
+      <div class="question" data-q="S60"><div class="question-head"><span class="q-num">S60</span><span class="q-text">G1–G2 Yönetişim – DMA kapsamında değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S60')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S60')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S60')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM N: IRO DERİNLİĞİ -->
+  <div class="section-block" data-section="N">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">N</span>
+      <span class="section-title">IRO Derinliği</span>
+      <span class="section-count">S61 – S70</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S61"><div class="question-head"><span class="q-num">S61</span><span class="q-text">Önemli konular için etki (Impact) tanımlandı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S61')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S61')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S61')">Hayır</button></div></div>
+      <div class="question" data-q="S62"><div class="question-head"><span class="q-num">S62</span><span class="q-text">Önemli konular için risk tanımlandı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S62')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S62')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S62')">Hayır</button></div></div>
+      <div class="question" data-q="S63"><div class="question-head"><span class="q-num">S63</span><span class="q-text">Önemli konular için fırsat tanımlandı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S63')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S63')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S63')">Hayır</button></div></div>
+      <div class="question" data-q="S64"><div class="question-head"><span class="q-num">S64</span><span class="q-text">Finansal etki değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S64')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S64')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S64')">Hayır</button></div></div>
+      <div class="question" data-q="S65"><div class="question-head"><span class="q-num">S65</span><span class="q-text">Her IRO için sorumlu kişi atandı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S65')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S65')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S65')">Hayır</button></div></div>
+      <div class="question" data-q="S66"><div class="question-head"><span class="q-num">S66</span><span class="q-text">Aksiyon planları tanımlandı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S66')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S66')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S66')">Hayır</button></div></div>
+      <div class="question" data-q="S67"><div class="question-head"><span class="q-num">S67</span><span class="q-text">Her IRO için KPI belirlendi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S67')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S67')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S67')">Hayır</button></div></div>
+      <div class="question" data-q="S68"><div class="question-head"><span class="q-num">S68</span><span class="q-text">Hedefler (sayısal) belirlendi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S68')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S68')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S68')">Hayır</button></div></div>
+      <div class="question" data-q="S69"><div class="question-head"><span class="q-num">S69</span><span class="q-text">Bütçe ayrıldı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S69')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S69')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S69')">Hayır</button></div></div>
+      <div class="question" data-q="S70"><div class="question-head"><span class="q-num">S70</span><span class="q-text">İzleme mekanizması kuruldu mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S70')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S70')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S70')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM O: BASIS FOR PREPARATION -->
+  <div class="section-block" data-section="O">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">O</span>
+      <span class="section-title">Hazırlık Temeli</span>
+      <span class="section-count">S71 – S75</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S71"><div class="question-head"><span class="q-num">S71</span><span class="q-text">Veri sınırlılıkları tanımlandı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S71')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S71')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S71')">Hayır</button></div></div>
+      <div class="question" data-q="S72"><div class="question-head"><span class="q-num">S72</span><span class="q-text">Varsayımlar belgelenmiş mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S72')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S72')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S72')">Hayır</button></div></div>
+      <div class="question" data-q="S73"><div class="question-head"><span class="q-num">S73</span><span class="q-text">Ölçüm belirsizlikleri tanımlandı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S73')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S73')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S73')">Hayır</button></div></div>
+      <div class="question" data-q="S74"><div class="question-head"><span class="q-num">S74</span><span class="q-text">Karşılaştırmalı (önceki yıl) veri hazırlanabiliyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S74')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S74')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S74')">Hayır</button></div></div>
+      <div class="question" data-q="S75"><div class="question-head"><span class="q-num">S75</span><span class="q-text">Önceki dönem düzeltmeleri yönetilebiliyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S75')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S75')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S75')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM P: SCOPE OLGUNLUĞU -->
+  <div class="section-block" data-section="P">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">P</span>
+      <span class="section-title">Scope 1-2-3 Olgunluğu</span>
+      <span class="section-count">S76 – S80</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S76"><div class="question-head"><span class="q-num">S76</span><span class="q-text">Tüm tesislerde Scope 1 hesaplanıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S76')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S76')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S76')">Hayır</button></div></div>
+      <div class="question" data-q="S77"><div class="question-head"><span class="q-num">S77</span><span class="q-text">Tüm tesislerde Scope 2 hesaplanıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S77')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S77')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S77')">Hayır</button></div></div>
+      <div class="question" data-q="S78"><div class="question-head"><span class="q-num">S78</span><span class="q-text">Scope 3 kategori bazında hesaplanıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S78')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S78')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S78')">Hayır</button></div></div>
+      <div class="question" data-q="S79"><div class="question-head"><span class="q-num">S79</span><span class="q-text">Emisyon faktörleri dokümante edilmiş mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S79')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S79')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S79')">Hayır</button></div></div>
+      <div class="question" data-q="S80"><div class="question-head"><span class="q-num">S80</span><span class="q-text">Veri kaynakları sınıflandırılmış mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S80')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S80')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S80')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM Q: RAPORLAMA ve GÜVENCE -->
+  <div class="section-block" data-section="Q">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">Q</span>
+      <span class="section-title">Raporlama ve Güvence</span>
+      <span class="section-count">S81 – S85</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S81"><div class="question-head"><span class="q-num">S81</span><span class="q-text">ESRS uyum matrisi oluşturuldu mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S81')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S81')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S81')">Hayır</button></div></div>
+      <div class="question" data-q="S82"><div class="question-head"><span class="q-num">S82</span><span class="q-text">TSRS uyum matrisi oluşturuldu mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S82')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S82')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S82')">Hayır</button></div></div>
+      <div class="question" data-q="S83"><div class="question-head"><span class="q-num">S83</span><span class="q-text">Denetim dosyası hazır mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S83')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S83')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S83')">Hayır</button></div></div>
+      <div class="question" data-q="S84"><div class="question-head"><span class="q-num">S84</span><span class="q-text">Kanıt klasörleri hazır mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S84')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S84')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S84')">Hayır</button></div></div>
+      <div class="question" data-q="S85"><div class="question-head"><span class="q-num">S85</span><span class="q-text">İç doğrulama yapıldı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S85')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S85')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S85')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM R: YEŞİL FİNANSMAN -->
+  <div class="section-block" data-section="R">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">R</span>
+      <span class="section-title">Yeşil Finansman</span>
+      <span class="section-count">S86 – S90</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S86"><div class="question-head"><span class="q-num">S86</span><span class="q-text">Yeşil kredi / sürdürülebilir finansman kullanıldı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S86')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S86')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S86')">Hayır</button></div></div>
+      <div class="question" data-q="S87"><div class="question-head"><span class="q-num">S87</span><span class="q-text">Sürdürülebilir finansman stratejisi var mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S87')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S87')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S87')">Hayır</button></div></div>
+      <div class="question" data-q="S88"><div class="question-head"><span class="q-num">S88</span><span class="q-text">ESG performansı finansal risk analizine dahil mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S88')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S88')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S88')">Hayır</button></div></div>
+      <div class="question" data-q="S89"><div class="question-head"><span class="q-num">S89</span><span class="q-text">İklim riskleri finansal planlamaya dahil mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S89')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S89')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S89')">Hayır</button></div></div>
+      <div class="question" data-q="S90"><div class="question-head"><span class="q-num">S90</span><span class="q-text">AB Taksonomisi uyumu değerlendirildi mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S90')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S90')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S90')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM S: DİJİTAL OLGUNLUK -->
+  <div class="section-block" data-section="S">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">S</span>
+      <span class="section-title">Dijital Olgunluk</span>
+      <span class="section-count">S91 – S95</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S91"><div class="question-head"><span class="q-num">S91</span><span class="q-text">ESG yazılımı / platformu kullanılıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S91')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S91')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S91')">Hayır</button></div></div>
+      <div class="question" data-q="S92"><div class="question-head"><span class="q-num">S92</span><span class="q-text">ESG verileri merkezi bir sistemde mi tutuluyor?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S92')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S92')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S92')">Hayır</button></div></div>
+      <div class="question" data-q="S93"><div class="question-head"><span class="q-num">S93</span><span class="q-text">Otomatik veri toplama mekanizması var mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S93')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S93')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S93')">Hayır</button></div></div>
+      <div class="question" data-q="S94"><div class="question-head"><span class="q-num">S94</span><span class="q-text">ESG dashboard kullanılıyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S94')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S94')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S94')">Hayır</button></div></div>
+      <div class="question" data-q="S95"><div class="question-head"><span class="q-num">S95</span><span class="q-text">KPI'lar gerçek zamanlı izleniyor mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S95')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S95')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S95')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  <!-- BÖLÜM T: KURUMSAL OLGUNLUK -->
+  <div class="section-block" data-section="T">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-code">T</span>
+      <span class="section-title">Kurumsal Olgunluk</span>
+      <span class="section-count">S96 – S100</span>
+      <span class="section-chevron">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="question" data-q="S96"><div class="question-head"><span class="q-num">S96</span><span class="q-text">Resmi bir ESG stratejisi mevcut mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S96')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S96')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S96')">Hayır</button></div></div>
+      <div class="question" data-q="S97"><div class="question-head"><span class="q-num">S97</span><span class="q-text">2030 sürdürülebilirlik hedefleri belirlenmiş mi?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S97')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S97')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S97')">Hayır</button></div></div>
+      <div class="question" data-q="S98"><div class="question-head"><span class="q-num">S98</span><span class="q-text">2050 net sıfır / uzun vadeli hedefler mevcut mu?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S98')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S98')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S98')">Hayır</button></div></div>
+      <div class="question" data-q="S99"><div class="question-head"><span class="q-num">S99</span><span class="q-text">Sürdürülebilirlik için ayrılmış bütçe var mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S99')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S99')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S99')">Hayır</button></div></div>
+      <div class="question" data-q="S100"><div class="question-head"><span class="q-num">S100</span><span class="q-text">Sürdürülebilirlik performansı yönetim prim sistemine bağlı mı?</span></div><div class="options"><button class="opt-btn" data-val="1" onclick="selectOpt(this,'S100')">Evet</button><button class="opt-btn" data-val="0.5" onclick="selectOpt(this,'S100')">Kısmen</button><button class="opt-btn" data-val="0" onclick="selectOpt(this,'S100')">Hayır</button></div></div>
+    </div>
+  </div>
+
+  </div><!-- /data-level=100 -->
+
+  <!-- SUBMIT ZONE -->
+  <div class="submit-zone" id="submitZone">
+    <h3>Değerlendirmenizi Tamamlayın</h3>
+    <p>Tüm cevaplarınız kaydedilecek, sonuçlarınız e-posta ile gönderilecek ve Google E-Tablolar'a aktarılacaktır.</p>
+    <button class="btn btn-primary" onclick="submitForm()" id="submitBtn" style="font-size:16px;padding:14px 44px;">
+      ✦ Sonuçları Gönder &amp; Rapor Al
+    </button>
+  </div>
+
+  <!-- RESULT SECTION -->
+  <div class="result-section" id="resultSection">
+    <div class="result-header">
+      <h2>Değerlendirme Sonucu</h2>
+      <div class="result-score-big" id="finalScoreDisplay">0 <span>/ 100</span></div>
+      <div class="result-status" id="finalStatus">—</div>
+    </div>
+    <div class="result-body">
+      <div class="result-grid" id="resultGrid"></div>
+      <div class="section-scores">
+        <h3>Bölüm Bazlı Performans</h3>
+        <div id="sectionScoreRows"></div>
+      </div>
+      <div class="actions-bar">
+        <button class="btn btn-secondary" onclick="downloadPDF()">⬇ PDF Rapor İndir</button>
+        <button class="btn btn-outline" onclick="resetForm()">↩ Yeniden Başla</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-wrap -->
+
+<footer>SHE · Sürdürülebilirlik Hazırlık Sistemi · ESG · ESRS · TSRS · © 2025</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+let answers = {};
+let currentLevel = 25;
+
+const WEBHOOK_URL = 'https://hook.eu1.make.com/l0wfno2gncgz70vj96i3te1dz6uv7rpi';
+
+// Question counts per section (for progress)
+const SECTIONS = {
+  A:{label:'Regülasyon Farkındalığı', qs:['S1','S2','S3','S4']},
+  B:{label:'Yönetim', qs:['S5','S6','S7']},
+  C:{label:'DMA ve IRO', qs:['S8','S9','S10','S11','S12']},
+  D:{label:'ESG Verisi', qs:['S13','S14','S15','S16']},
+  E:{label:'Karbon', qs:['S17','S18','S19','S20']},
+  F:{label:'Raporlama', qs:['S21','S22','S23']},
+  G:{label:'Pazar Talebi', qs:['S24','S25']},
+  H:{label:'Org. Sınır', qs:['S26','S27','S28','S29','S30']},
+  I:{label:'Değer Zinciri', qs:['S31','S32','S33','S34','S35']},
+  J:{label:'Yönetişim', qs:['S36','S37','S38','S39','S40']},
+  K:{label:'Veri Güv.', qs:['S41','S42','S43','S44','S45']},
+  L:{label:'Hedefler', qs:['S46','S47','S48','S49','S50']},
+  M:{label:'DMA Detay', qs:['S51','S52','S53','S54','S55','S56','S57','S58','S59','S60']},
+  N:{label:'IRO Derinliği', qs:['S61','S62','S63','S64','S65','S66','S67','S68','S69','S70']},
+  O:{label:'Hazırlık Temeli', qs:['S71','S72','S73','S74','S75']},
+  P:{label:'Scope Olgunluğu', qs:['S76','S77','S78','S79','S80']},
+  Q:{label:'Rapor/Güvence', qs:['S81','S82','S83','S84','S85']},
+  R:{label:'Yeşil Finans', qs:['S86','S87','S88','S89','S90']},
+  S:{label:'Dijital Olgunluk', qs:['S91','S92','S93','S94','S95']},
+  T:{label:'Kurumsal Olg.', qs:['S96','S97','S98','S99','S100']},
+};
+
+const LEVEL_SECTIONS = {
+  25: ['A','B','C','D','E','F','G'],
+  50: ['A','B','C','D','E','F','G','H','I','J','K','L'],
+  100: Object.keys(SECTIONS)
+};
+
+// Max scores per level
+const MAX_SCORES = { 25: 100, 50: 100, 100: 100 };
+
+// ═══════════════════════════════════════════════════
+// LEVEL MANAGEMENT
+// ═══════════════════════════════════════════════════
+function setLevel(lvl) {
+  currentLevel = lvl;
+  // Update tabs
+  document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + lvl).classList.add('active');
+  // Show/hide sections
+  document.querySelectorAll('[data-level]').forEach(el => {
+    const elLvl = parseInt(el.getAttribute('data-level'));
+    el.style.display = lvl >= elLvl ? 'block' : 'none';
+  });
+  // Show gates
+  if(lvl >= 50) { const g=document.getElementById('gate-50'); if(g) g.classList.add('visible'); }
+  if(lvl >= 100) { const g=document.getElementById('gate-100'); if(g) g.classList.add('visible'); }
+  // Unlock tabs
+  if(lvl >= 50) document.getElementById('tab-50').classList.remove('locked');
+  if(lvl >= 100) document.getElementById('tab-100').classList.remove('locked');
+  buildProgressSections();
+  recalcScore();
 }
 
-function attach(){
-  // ── INTAKE ──
-  const bs=document.getElementById('btn-start');
-  if(bs)bs.addEventListener('click',()=>{
-    const nm=document.getElementById('f-name').value.trim();
-    const sec=document.getElementById('f-sector').value;
-    const em=document.getElementById('f-email').value.trim();
-    let ok=true;
-    [['f-name','e-name',!nm],['f-sector','e-sector',!sec],['f-email','e-email',!em||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)]].forEach(([fid,eid,bad])=>{
-      const f=document.getElementById(fid),e=document.getElementById(eid);
-      if(bad){f&&f.classList.add('invalid');e&&e.classList.add('show');ok=false;}
-      else{f&&f.classList.remove('invalid');e&&e.classList.remove('show');}
-    });
-    if(!ok)return;
-    ST.firm={name:nm,sector:sec,size:document.getElementById('f-size').value,city:document.getElementById('f-city').value.trim(),contact:document.getElementById('f-contact').value.trim(),email:em,targetLv:document.getElementById('f-level').value};
-    ST.phase='quiz';render();window.scrollTo(0,0);
-  });
+// ═══════════════════════════════════════════════════
+// TOGGLE SECTION
+// ═══════════════════════════════════════════════════
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  const isCollapsed = body.classList.contains('hidden');
+  body.classList.toggle('hidden', !isCollapsed);
+  header.classList.toggle('collapsed', !isCollapsed);
+}
 
-  // ── QUIZ OPT ──
-  document.querySelectorAll('.opt').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const qs=qsFor(ST.lv);const q=qs[ST.qi];
-      ST.ans[q.id]=parseInt(btn.dataset.idx);
-      document.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
-      btn.classList.add('sel');
-      const nb=document.getElementById('btn-next');if(nb)nb.disabled=false;
+// ═══════════════════════════════════════════════════
+// SELECT OPTION
+// ═══════════════════════════════════════════════════
+function selectOpt(btn, qId) {
+  const opts = btn.closest('.options').querySelectorAll('.opt-btn');
+  opts.forEach(o => o.classList.remove('selected', 'selected-amber', 'selected-no'));
+  const val = parseFloat(btn.getAttribute('data-val'));
+  if(val >= 3) btn.classList.add('selected');
+  else if(val > 0) btn.classList.add('selected-amber');
+  else btn.classList.add('selected-no');
+  answers[qId] = { val, label: btn.textContent.trim() };
+  btn.closest('.question').classList.add('answered');
+  recalcScore();
+  checkSectionProgress();
+}
+
+// ═══════════════════════════════════════════════════
+// SCORE CALCULATION
+// ═══════════════════════════════════════════════════
+function recalcScore() {
+  const activeSecs = LEVEL_SECTIONS[currentLevel];
+  let totalRaw = 0;
+  // SHE-25: each answered q max 4 → 25q → normalise to 100
+  // SHE-50: S1-25 max 4pts each + S26-50 max 2pts each → normalise
+  // SHE-100: all → normalise
+  activeSecs.forEach(s => {
+    SECTIONS[s].qs.forEach(q => {
+      if(answers[q]) totalRaw += answers[q].val;
     });
   });
-
-  // ── NEXT ──
-  const bn=document.getElementById('btn-next');
-  if(bn)bn.addEventListener('click',()=>{
-    const tlv=parseInt(ST.firm.targetLv||25);
-    const qs=qsFor(ST.lv);
-    const isLast=ST.qi===qs.length-1;
-    const isLastLv=ST.lv===tlv;
-    if(isLast){
-      if(!isLastLv){
-        const lvls=[25,50,100];const idx=lvls.indexOf(ST.lv);const nxt=lvls[idx+1];
-        if(nxt<=tlv){ST.lv=nxt;ST.unlocked.push(nxt);ST.qi=0;}
-      } else {
-        ST.phase='result';
-        render();
-        window.scrollTo(0,0);
-        // ── OTOMATİK GÖNDERİM — sonuç ekranına geçince anında tetiklenir ──
-        const payload=buildPayload();
-        sendToMake(payload).then(()=>{
-          const el=document.getElementById('auto-status');
-          if(el){el.className='status-msg ok';el.textContent='✓ Sonuçlarınız başarıyla kaydedildi.';}
-        }).catch(()=>{
-          const el=document.getElementById('auto-status');
-          if(el){el.className='status-msg err';el.textContent='Kayıt sırasında bir hata oluştu.';}
-        });
-        return;
+  // Max raw scores
+  let maxRaw = 0;
+  activeSecs.forEach(s => {
+    SECTIONS[s].qs.forEach(q => {
+      const el = document.querySelector(`[data-q="${q}"] .opt-btn`);
+      if(el) {
+        const btns = document.querySelectorAll(`[data-q="${q}"] .opt-btn`);
+        const vals = Array.from(btns).map(b => parseFloat(b.getAttribute('data-val')));
+        maxRaw += Math.max(...vals);
       }
-    } else {ST.qi++;}
-    render();window.scrollTo(0,0);
+    });
   });
+  const score = maxRaw > 0 ? Math.round((totalRaw / maxRaw) * 100) : 0;
+  document.getElementById('liveScore').innerHTML = score + ' <span>/ 100</span>';
+  document.getElementById('progressFill').style.width = score + '%';
+  return score;
+}
 
-  // ── BACK ──
-  const bb=document.getElementById('btn-back');
-  if(bb)bb.addEventListener('click',()=>{
-    if(ST.qi>0){ST.qi--;}
-    else{const lvls=[25,50,100];const idx=lvls.indexOf(ST.lv);if(idx>0){ST.lv=lvls[idx-1];ST.qi=qsFor(ST.lv).length-1;}}
-    render();window.scrollTo(0,0);
-  });
-
-  // ── YENİ DEĞERLENDİRME ──
-  const bnw=document.getElementById('btn-new');
-  if(bnw)bnw.addEventListener('click',()=>{ST={phase:'intake',lv:25,qi:0,ans:{},firm:{},unlocked:[25]};render();window.scrollTo(0,0);});
-
-  // ── DANIŞMANLIK TALEBİ ──
-  const bco=document.getElementById('btn-consult');
-  if(bco)bco.addEventListener('click',()=>{
-    const p=buildPayload();
-    const body=`Merhaba,\n\nFirmamız için danışmanlık talebi oluşturmak istiyoruz.\n\nFirma: ${p.firma_adi}\nSektör: ${p.sektor}\nESG Puanı: ${p.toplam_puan}/100 (${p.olgunluk_durumu})\n\nLütfen bizimle iletişime geçiniz.`;
-    window.location.href=`mailto:?subject=Danışmanlık Talebi - ${p.firma_adi}&body=${encodeURIComponent(body)}`;
-  });
-
-  // ── MANÜEl E-POSTA (Make.com'un mail aksiyonu için bilgi) ──
-  const bse=document.getElementById('btn-send-email');
-  if(bse)bse.addEventListener('click',async()=>{
-    const el=document.getElementById('send-email');
-    const sl=document.getElementById('email-status');
-    const addr=el.value.trim();
-    if(!addr||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(addr)){sl.className='status-msg err';sl.textContent='Geçerli bir e-posta giriniz.';return;}
-    bse.disabled=true;bse.textContent='...';
-    sl.className='status-msg loading';sl.textContent='Gönderiliyor...';
-    // Webhook zaten tetiklendi; Make.com mail aksiyonu firma e-postasına gönderecek
-    await new Promise(r=>setTimeout(r,800));
-    sl.className='status-msg ok';
-    sl.innerHTML=`✓ Talep iletildi. Make.com mail aksiyonu <strong>${addr}</strong> adresine sonuç raporunu gönderecek.`;
-    bse.disabled=false;bse.textContent='Gönder';
+// ═══════════════════════════════════════════════════
+// PROGRESS SECTIONS
+// ═══════════════════════════════════════════════════
+function buildProgressSections() {
+  const wrap = document.getElementById('progSecs');
+  wrap.innerHTML = '';
+  LEVEL_SECTIONS[currentLevel].forEach(sec => {
+    const el = document.createElement('span');
+    el.className = 'prog-sec';
+    el.id = 'prog-' + sec;
+    el.textContent = sec;
+    wrap.appendChild(el);
   });
 }
 
-render();
+function checkSectionProgress() {
+  LEVEL_SECTIONS[currentLevel].forEach(sec => {
+    const qs = SECTIONS[sec].qs;
+    const done = qs.every(q => answers[q] !== undefined);
+    const el = document.getElementById('prog-' + sec);
+    if(el) el.classList.toggle('done', done);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// SCROLL TO FORM
+// ═══════════════════════════════════════════════════
+function scrollToForm() {
+  document.getElementById('formTop').scrollIntoView({behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ═══════════════════════════════════════════════════
+// SUBMIT
+// ═══════════════════════════════════════════════════
+async function submitForm() {
+  const firmAdi = document.getElementById('firmAdi').value.trim();
+  const email = document.getElementById('email').value.trim();
+  if(!firmAdi || !email) { showToast('⚠ Şirket adı ve e-posta zorunludur.', true); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = '<span class="spinner"></span> Gönderiliyor...';
+  btn.disabled = true;
+
+  const score = recalcScore();
+  const status = getStatus(score);
+  const modules = getModules(score);
+
+  // Build section scores
+  const sectionScores = {};
+  LEVEL_SECTIONS[currentLevel].forEach(sec => {
+    const qs = SECTIONS[sec].qs;
+    let raw = 0, maxR = 0;
+    qs.forEach(q => {
+      if(answers[q]) raw += answers[q].val;
+      const btns = document.querySelectorAll(`[data-q="${q}"] .opt-btn`);
+      if(btns.length) {
+        const vals = Array.from(btns).map(b => parseFloat(b.getAttribute('data-val')));
+        maxR += Math.max(...vals);
+      }
+    });
+    sectionScores[sec] = maxR > 0 ? Math.round((raw/maxR)*100) : 0;
+  });
+
+  // Build answers map (labels)
+  const answersLabels = {};
+  Object.keys(answers).forEach(k => { answersLabels[k] = answers[k].label; });
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    firma_adi: firmAdi,
+    sektor: document.getElementById('sektor').value,
+    buyukluk: document.getElementById('buyukluk').value,
+    kontak: document.getElementById('kontak').value.trim(),
+    email: email,
+    telefon: document.getElementById('telefon').value.trim(),
+    not: document.getElementById('not').value.trim(),
+    form_seviyesi: 'SHE-' + currentLevel,
+    toplam_skor: score,
+    durum: status,
+    onerilen_moduller: modules.join(', '),
+    bolum_skorlari: JSON.stringify(sectionScores),
+    cevaplar: JSON.stringify(answersLabels),
+    soru_sayisi: currentLevel
+  };
+
+  try {
+    const res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if(res.ok || res.status === 200) {
+      showToast('✓ Sonuçlar başarıyla gönderildi! E-posta ve Google Sheets\'e kaydedildi.');
+      showResults(score, status, modules, sectionScores);
+    } else {
+      throw new Error('HTTP ' + res.status);
+    }
+  } catch(err) {
+    // Still show results even if webhook fails
+    showToast('⚠ Webhook bağlantısında sorun oluştu, sonuçlar yine de gösteriliyor.', true);
+    showResults(score, status, modules, sectionScores);
+  }
+
+  btn.innerHTML = '✓ Gönderildi';
+  btn.disabled = false;
+}
+
+// ═══════════════════════════════════════════════════
+// SHOW RESULTS
+// ═══════════════════════════════════════════════════
+function showResults(score, status, modules, sectionScores) {
+  document.getElementById('finalScoreDisplay').innerHTML = score + ' <span>/ 100</span>';
+  document.getElementById('finalStatus').textContent = status;
+
+  // Grid cards
+  const grid = document.getElementById('resultGrid');
+  grid.innerHTML = `
+    <div class="result-card">
+      <h4>Şirket</h4>
+      <p>${document.getElementById('firmAdi').value} · ${document.getElementById('sektor').value || '—'}</p>
+    </div>
+    <div class="result-card">
+      <h4>Form Seviyesi</h4>
+      <p>SHE-${currentLevel} · ${currentLevel} Soru</p>
+    </div>
+    <div class="result-card">
+      <h4>Durum</h4>
+      <p style="font-family:'Fraunces',serif;font-size:18px;color:var(--sage)">${status}</p>
+    </div>
+    <div class="result-card">
+      <h4>Önerilen Eğitim Modülleri</h4>
+      <ul>${modules.map(m=>`<li>${m}</li>`).join('')}</ul>
+    </div>
+  `;
+
+  // Section score rows
+  const rows = document.getElementById('sectionScoreRows');
+  rows.innerHTML = '';
+  const activeSecs = LEVEL_SECTIONS[currentLevel];
+  activeSecs.forEach(sec => {
+    const sc = sectionScores[sec] || 0;
+    rows.innerHTML += `
+      <div class="sec-score-row">
+        <div class="sec-score-label">${sec} – ${SECTIONS[sec].label}</div>
+        <div class="sec-score-bar-bg"><div class="sec-score-bar" style="width:${sc}%"></div></div>
+        <div class="sec-score-val">${sc}%</div>
+      </div>`;
+  });
+
+  document.getElementById('resultSection').classList.add('visible');
+  document.getElementById('resultSection').scrollIntoView({behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════════════
+// STATUS & MODULES
+// ═══════════════════════════════════════════════════
+function getStatus(score) {
+  if(score <= 20) return 'Habersiz';
+  if(score <= 40) return 'Başlangıç';
+  if(score <= 60) return 'Hazırlık';
+  if(score <= 80) return 'İlk Raporlama';
+  if(score <= 90) return 'Uyumlu';
+  return 'Lider';
+}
+function getModules(score) {
+  if(score <= 20) return ['Modül 1: ESG Temelleri'];
+  if(score <= 40) return ['Modül 1: ESG Temelleri','Modül 2: Veri Yönetimi'];
+  if(score <= 60) return ['Modül 2: Veri Yönetimi','Modül 3: DMA','Modül 4: ESRS Giriş'];
+  if(score <= 80) return ['Modül 4: ESRS Giriş','Modül 5: Raporlama'];
+  if(score <= 90) return ['Modül 5: Raporlama','Modül 6: Güvence'];
+  return ['İleri Uzmanlık Programı'];
+}
+
+// ═══════════════════════════════════════════════════
+// PDF EXPORT
+// ═══════════════════════════════════════════════════
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+  const score = recalcScore();
+  const status = getStatus(score);
+  const firma = document.getElementById('firmAdi').value || 'Firma';
+  const sektor = document.getElementById('sektor').value || '';
+  const email = document.getElementById('email').value || '';
+  const date = new Date().toLocaleDateString('tr-TR');
+
+  // Header
+  doc.setFillColor(15,17,23);
+  doc.rect(0,0,210,40,'F');
+  doc.setTextColor(245,240,232);
+  doc.setFontSize(22);
+  doc.setFont('helvetica','bold');
+  doc.text('SHE – Sürdürülebilirlik Hazırlık Raporu', 14, 18);
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  doc.setTextColor(122,171,138);
+  doc.text(`SHE-${currentLevel} | ${date}`, 14, 28);
+  doc.text(`ESG · ESRS · TSRS`, 14, 35);
+
+  // Score block
+  doc.setFillColor(74,124,89);
+  doc.rect(0,40,210,28,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(36);
+  doc.setFont('helvetica','bold');
+  doc.text(score.toString(), 14, 60);
+  doc.setFontSize(14);
+  doc.setFont('helvetica','normal');
+  doc.text('/ 100', 36, 60);
+  doc.setFontSize(14);
+  doc.text(status, 100, 58);
+  doc.setFontSize(10);
+  doc.text('Önerilen Modüller: ' + getModules(score).join(', '), 100, 64);
+
+  let y = 80;
+
+  // Company info
+  doc.setTextColor(15,17,23);
+  doc.setFontSize(14);
+  doc.setFont('helvetica','bold');
+  doc.text('Firma Bilgileri', 14, y); y += 8;
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  const info = [
+    ['Şirket', firma],
+    ['Sektör', sektor],
+    ['E-posta', email],
+    ['Form Seviyesi', `SHE-${currentLevel}`],
+  ];
+  info.forEach(([k,v]) => {
+    doc.setFont('helvetica','bold'); doc.text(k + ':', 14, y);
+    doc.setFont('helvetica','normal'); doc.text(v || '—', 50, y);
+    y += 6;
+  });
+  y += 6;
+
+  // Section scores
+  doc.setFontSize(14);
+  doc.setFont('helvetica','bold');
+  doc.text('Bölüm Bazlı Skorlar', 14, y); y += 8;
+
+  const activeSecs = LEVEL_SECTIONS[currentLevel];
+  activeSecs.forEach(sec => {
+    let raw = 0, maxR = 0;
+    SECTIONS[sec].qs.forEach(q => {
+      if(answers[q]) raw += answers[q].val;
+      const btns = document.querySelectorAll(`[data-q="${q}"] .opt-btn`);
+      if(btns.length) {
+        const vals = Array.from(btns).map(b => parseFloat(b.getAttribute('data-val')));
+        maxR += Math.max(...vals);
+      }
+    });
+    const pct = maxR > 0 ? Math.round((raw/maxR)*100) : 0;
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.setTextColor(15,17,23);
+    doc.text(`${sec} – ${SECTIONS[sec].label}`, 14, y);
+
+    // Bar
+    doc.setFillColor(221,228,216);
+    doc.rect(80, y-3.5, 100, 4, 'F');
+    doc.setFillColor(74,124,89);
+    doc.rect(80, y-3.5, pct, 4, 'F');
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(74,124,89);
+    doc.text(pct + '%', 185, y);
+    doc.setTextColor(15,17,23);
+    y += 7;
+    if(y > 265) { doc.addPage(); y = 20; }
+  });
+
+  y += 6;
+
+  // Answers
+  if(y + 20 > 265) { doc.addPage(); y = 20; }
+  doc.setFontSize(14);
+  doc.setFont('helvetica','bold');
+  doc.text('Cevap Detayları', 14, y); y += 8;
+  doc.setFontSize(8);
+
+  Object.keys(answers).forEach(qId => {
+    const qEl = document.querySelector(`[data-q="${qId}"] .q-text`);
+    const qText = qEl ? qEl.textContent : qId;
+    const truncated = qText.length > 60 ? qText.substring(0,60) + '...' : qText;
+    doc.setFont('helvetica','bold');
+    doc.setTextColor(74,124,89);
+    doc.text(qId + ':', 14, y);
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(15,17,23);
+    doc.text(truncated, 24, y);
+    doc.setTextColor(74,124,89);
+    doc.text(answers[qId].label, 170, y);
+    doc.setTextColor(15,17,23);
+    y += 5;
+    if(y > 272) { doc.addPage(); y = 16; }
+  });
+
+  // Footer
+  const pageCount = doc.internal.getNumberOfPages();
+  for(let i=1; i<=pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setTextColor(150);
+    doc.text(`SHE Sürdürülebilirlik Hazırlık Sistemi · ${firma} · ${date} · Sayfa ${i}/${pageCount}`, 14, 288);
+  }
+
+  doc.save(`SHE-${currentLevel}_${firma.replace(/\s+/g,'_')}_${date.replace(/\./g,'-')}.pdf`);
+  showToast('✓ PDF rapor indirildi!');
+}
+
+// ═══════════════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════════════
+function resetForm() {
+  answers = {};
+  document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected','selected-amber','selected-no'));
+  document.querySelectorAll('.question').forEach(q => q.classList.remove('answered'));
+  document.getElementById('resultSection').classList.remove('visible');
+  document.getElementById('submitBtn').innerHTML = '✦ Sonuçları Gönder & Rapor Al';
+  document.getElementById('submitBtn').disabled = false;
+  recalcScore();
+  checkSectionProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+buildProgressSections();
+recalcScore();
 </script>
+</body>
+</html>
